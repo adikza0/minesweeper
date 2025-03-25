@@ -10,6 +10,11 @@ export class Cell {
     this.isFlagged = false;
     this.adjacentMines = 0;
   }
+
+  insertBomb() {
+    this.isMine = true;
+  }
 }
 const cell = new Cell();
+cell.insertBomb();
 console.log(cell);
