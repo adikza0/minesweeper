@@ -11,3 +11,5 @@ export class Cell {
     this.adjacentMines = 0;
   }
 }
+const cell = new Cell();
+console.log(cell);
