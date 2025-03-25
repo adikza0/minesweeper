@@ -8,4 +8,9 @@ describe('Cell tests', () => {
     expect(cell.isRevealed).toEqual(false);
     expect(cell instanceof Cell).toEqual(true);
   })
+  it('insertBomb test', () => {
+    const cell = new Cell();
+    cell.insertBomb();
+    expect(cell.isMine).toEqual(true);
+  })
 })
