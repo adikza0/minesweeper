@@ -4,11 +4,16 @@ export class Matrix {
   columns;
   matrix;
   constructor(rows, columns) {
+    if (rows < 1) {
+      throw new Error("Matice musí mít alespoň 1 řádek.");
+    }
+    if (columns < 1) {
+      throw new Error("Matice musí mít alespoň 1 sloupec.");
+    } 
     this.rows = rows;
     this.columns = columns;
     this.matrix = this.createEmptyMatrix();
   }
-
 
   createEmptyMatrix(){
     const emptyMatrix = [];
