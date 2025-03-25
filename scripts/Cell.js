@@ -16,5 +16,3 @@ export class Cell {
   }
 }
 const cell = new Cell();
-cell.insertBomb();
-console.log(cell);
