@@ -57,7 +57,7 @@ describe('Matrix tests', () => {
     }
   })
 
-  it('generateBombs test',() => {
+  it('generateBombs test with square matrix',() => {
     const matrix = new Matrix(5,5);
     matrix.createEmptyMatrix();
     matrix.generateBombs(5);
@@ -70,6 +70,40 @@ describe('Matrix tests', () => {
       }
     }
     expect(bombCount).toEqual(5);
+  })
+
+  it('generateBombs test with rectangle matrix',() => {
+    const matrix = new Matrix(10,5);
+    matrix.createEmptyMatrix();
+    matrix.generateBombs(10);
+    let bombCount = 0;
+    for(let i = 0; i < 10; i++){
+      for(let j = 0; j < 5; j++){
+        if(matrix.matrix[i][j].isMine){
+          bombCount++;
+        }
+      }
+    }
+    expect(bombCount).toEqual(10);
+  })
+
+  it('returnRemainingBombCount test', () => {
+    let matrix;
+
+    matrix = new Matrix(5,5);
+    matrix.createEmptyMatrix();
+    matrix.generateBombs(5);
+    expect(matrix.returnRemainingBombCount()).toEqual(5);
+
+    matrix = new Matrix(2,6);
+    matrix.createEmptyMatrix();
+    matrix.generateBombs(8);
+    expect(matrix.returnRemainingBombCount()).toEqual(8);
+
+    matrix = new Matrix(5,12);
+    matrix.createEmptyMatrix();
+    matrix.generateBombs(20);
+    expect(matrix.returnRemainingBombCount()).toEqual(20);
   })
 
 });

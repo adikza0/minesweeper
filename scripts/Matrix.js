@@ -33,9 +33,7 @@ export class Matrix {
     let y;
     for (let i = 0; i < bombCount; i++) {
       [x, y] = this.generateRandomPosition();
-      console.log(x);
-      console.log(y);
-      console.log(this.matrix[y][x]);
+
       while (this.matrix[y][x].isMine) {
         [x, y] = this.generateRandomPosition();
       }
@@ -43,8 +41,20 @@ export class Matrix {
     }
   }
 
+  returnRemainingBombCount(){
+    let bombCount = 0;
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
+        if(this.matrix[i][j].isMine){
+          bombCount++;
+        }
+      }
+    }
+    return bombCount;
+  }
+
   generateRandomPosition(){
-    return [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
+    return [Math.floor(Math.random() * this.columns), Math.floor(Math.random() * this.rows)];
   }
 
 }
