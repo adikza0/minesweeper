@@ -96,4 +96,14 @@ describe('Matrix tests', () => {
     expect(matrix.returnRemainingBombCount()).toEqual(20);
   })
 
+  it('doesCellExist test', () => {
+    const matrix = new Matrix(6, 4, 0);
+    expect(matrix.doesCellExist(-1, 0)).toEqual(false);
+    expect(matrix.doesCellExist(0, -1)).toEqual(false);
+    expect(matrix.doesCellExist(5, 0)).toEqual(false);
+    expect(matrix.doesCellExist(0, 5)).toEqual(true);
+    expect(matrix.doesCellExist(0, 0)).toEqual(true);
+    expect(matrix.doesCellExist(4, 4)).toEqual(false);
+  })
+
 });

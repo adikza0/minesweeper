@@ -19,7 +19,7 @@ export class Matrix {
   }
   generateMatrix(){
     this.createEmptyMatrix();
-    this.generateBombs();
+    this.generateBombs(10);
   }
   createEmptyMatrix(){
     const emptyMatrix = [];
@@ -33,7 +33,7 @@ export class Matrix {
     this.matrix = emptyMatrix;
   }
 
-  generateBombs(){
+  generateBombs(bombCount){
     let x;
     let y;
     for (let i = 0; i < this.bombCount; i++) {
@@ -62,4 +62,10 @@ export class Matrix {
     return [Math.floor(Math.random() * this.columns), Math.floor(Math.random() * this.rows)];
   }
 
+  doesCellExist(x, y){
+    if(x < 0 || x >= this.columns || y < 0 || y >= this.rows){
+      return false;
+    }
+    return true;
+  }
 }
