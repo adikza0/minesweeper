@@ -1,12 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minesweeper</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minesweeper 5x5</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+    }
+    .game-container { 
+      display: inline-block; 
+      margin: 20px auto; 
+    }
+    .row { 
+      display: flex; 
+    }
+    .cell { 
+      width: 30px; 
+      height: 30px; 
+      background: #ddd; 
+      text-align: center; 
+      line-height: 30px; 
+      border: 1px solid #999; 
+      font-weight: bold; 
+      cursor: pointer; 
+    }
+    .cell.revealed { 
+      background: #bbb; 
+      cursor: default; 
+    }
+    .cell.mine { 
+      background: red; 
+      color: white; 
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Minesweeper</h1>
-  <script type="module" src="./scripts/Matrix.js"></script>
+  <h1>Minesweeper 5x5</h1>
+  <div class="game-container js-game-container">
+    <!--
+    <div class="row">
+      <div class="cell revealed">1</div>
+      <div class="cell revealed">1</div>
+      <div class="cell revealed">0</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    <div class="row">
+      <div class="cell"></div>
+      <div class="cell mine">💣</div>
+      <div class="cell revealed">2</div>
+      <div class="cell revealed">1</div>
+      <div class="cell"></div>
+    </div>
+    <div class="row">
+      <div class="cell revealed">1</div>
+      <div class="cell revealed">2</div>
+      <div class="cell revealed">2</div>
+      <div class="cell revealed">1</div>
+      <div class="cell"></div>
+    </div>
+    <div class="row">
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell mine">💣</div>
+      <div class="cell revealed">2</div>
+      <div class="cell revealed">1</div>
+    </div>
+    <div class="row">
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell revealed">1</div>
+      <div class="cell revealed">1</div>
+      <div class="cell"></div>
+    </div>
+    -->
+  </div>
+  <script type="module" src="./scripts/game.js"></script>
 </body>
 </html>
