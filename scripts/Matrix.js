@@ -23,14 +23,26 @@ export class Matrix {
       for(let j = 0; j < this.columns; j++){
         emptyMatrix[i].push(new Cell());
       }
+    
     }
-    console.log(emptyMatrix);
-    return emptyMatrix;
+    this.matrix = emptyMatrix;
   }
 
   generateBombs(bombCount){
-  
+    let x;
+    let y;
+    for (let i = 0; i < bombCount; i++) {
+      [x, y] = this.generateRandomPosition();
+      console.log(x);
+      console.log(y);
+      console.log(this.matrix[y][x]);
+      while (this.matrix[y][x].isMine) {
+        [x, y] = this.generateRandomPosition();
+      }
+      this.matrix[y][x].insertBomb();
+    }
   }
+
   generateRandomPosition(){
     return [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
   }

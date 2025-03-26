@@ -15,31 +15,33 @@ describe('Matrix tests', () => {
   })
 
   it('createEmptyMatrix test', () => {
-    let emptyMatrix = new Matrix(5, 5).createEmptyMatrix();
-    expect(emptyMatrix.length).toEqual(5);
-    expect(emptyMatrix[0].length).toEqual(5);
+    let emptyMatrix = new Matrix(5, 5);
+    emptyMatrix.createEmptyMatrix();
+    expect(emptyMatrix.matrix.length).toEqual(5);
+    expect(emptyMatrix.matrix[0].length).toEqual(5);
     for(let i = 0; i < 5; i++){
       for(let j = 0; j < 5; j++){
-        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true);
-        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true)
-        expect(emptyMatrix[j][i].adjacentMines).toEqual(0);
-        expect(emptyMatrix[j][i].isMine).toEqual(false);
-        expect(emptyMatrix[j][i].isFlagged).toEqual(false);
-        expect(emptyMatrix[j][i].isRevealed).toEqual(false);
+        expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true);
+        expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true)
+        expect(emptyMatrix.matrix[j][i].adjacentMines).toEqual(0);
+        expect(emptyMatrix.matrix[j][i].isMine).toEqual(false);
+        expect(emptyMatrix.matrix[j][i].isFlagged).toEqual(false);
+        expect(emptyMatrix.matrix[j][i].isRevealed).toEqual(false);
       }
     }
 
-    emptyMatrix = new Matrix(1, 5).createEmptyMatrix();
-    expect(emptyMatrix.length).toEqual(1);
-    expect(emptyMatrix[0].length).toEqual(5);
+    emptyMatrix = new Matrix(1, 5);
+    emptyMatrix.createEmptyMatrix();
+    expect(emptyMatrix.matrix.length).toEqual(1);
+    expect(emptyMatrix.matrix[0].length).toEqual(5);
     for(let i = 0; i < 1; i++){
       for(let j = 0; j < 5; j++){
-        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true);
-        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true)
-        expect(emptyMatrix[i][j].adjacentMines).toEqual(0);
-        expect(emptyMatrix[i][j].isMine).toEqual(false);
-        expect(emptyMatrix[i][j].isFlagged).toEqual(false);
-        expect(emptyMatrix[i][j].isRevealed).toEqual(false);
+        expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true);
+        expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true)
+        expect(emptyMatrix.matrix[i][j].adjacentMines).toEqual(0);
+        expect(emptyMatrix.matrix[i][j].isMine).toEqual(false);
+        expect(emptyMatrix.matrix[i][j].isFlagged).toEqual(false);
+        expect(emptyMatrix.matrix[i][j].isRevealed).toEqual(false);
       }
     }
   })
@@ -53,6 +55,21 @@ describe('Matrix tests', () => {
       expect(position[1]).toBeGreaterThanOrEqual(0);
       expect(position[1]).toBeLessThan(5);
     }
+  })
+
+  it('generateBombs test',() => {
+    const matrix = new Matrix(5,5);
+    matrix.createEmptyMatrix();
+    matrix.generateBombs(5);
+    let bombCount = 0;
+    for(let i = 0; i < 5; i++){
+      for(let j = 0; j < 5; j++){
+        if(matrix.matrix[i][j].isMine){
+          bombCount++;
+        }
+      }
+    }
+    expect(bombCount).toEqual(5);
   })
 
 });
