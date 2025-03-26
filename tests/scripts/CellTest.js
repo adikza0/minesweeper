@@ -10,6 +10,7 @@ describe('Cell tests', () => {
   })
   it('insertBomb test', () => {
     const cell = new Cell();
+    expect(cell.isMine).toEqual(false);
     cell.insertBomb();
     expect(cell.isMine).toEqual(true);
   })

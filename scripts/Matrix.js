@@ -12,7 +12,8 @@ export class Matrix {
     } 
     this.rows = rows;
     this.columns = columns;
-    this.matrix = this.createEmptyMatrix();
+    this.matrix= [];
+    //this.matrix = this.createEmptyMatrix();
   }
 
   createEmptyMatrix(){
@@ -23,9 +24,7 @@ export class Matrix {
         emptyMatrix[i].push(new Cell());
       }
     }
+    console.log(emptyMatrix);
     return emptyMatrix;
   }
 }
-
-const matrix = new Matrix(5, 5);
-console.log(matrix);

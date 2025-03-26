@@ -1,4 +1,5 @@
 import {Matrix} from '../../scripts/Matrix.js';
+import {Cell} from '../../scripts/Cell.js';
 
 describe('Matrix tests', () => {
   it('constructor test', () => {
@@ -13,8 +14,20 @@ describe('Matrix tests', () => {
     expect(() => new Matrix(5, 0)).toThrowError("Matice musí mít alespoň 1 sloupec.");
   })
 
-  it('generateEmptyMatrix test', () => {
-
+  it('createEmptyMatrix test', () => {
+    const emptyMatrix = new Matrix(5, 5).createEmptyMatrix();
+    expect(emptyMatrix.length).toEqual(5);
+    expect(emptyMatrix[0].length).toEqual(5);
+    for(let i = 0; i < 5; i++){
+      for(let j = 0; j < 5; j++){
+        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true);
+        expect(emptyMatrix[i][j] instanceof Cell).toEqual(true)
+        expect(emptyMatrix[j][i].adjacentMines).toEqual(0);
+        expect(emptyMatrix[j][i].isMine).toEqual(false);
+        expect(emptyMatrix[j][i].isFlagged).toEqual(false);
+        expect(emptyMatrix[j][i].isRevealed).toEqual(false);
+      }
+    }
   })
 
 });
