@@ -28,8 +28,8 @@ describe('Matrix tests', () => {
         expect(emptyMatrix[j][i].isRevealed).toEqual(false);
       }
     }
-    
-    emptyMatrix = new Matrix(1, 5).    createEmptyMatrix();
+
+    emptyMatrix = new Matrix(1, 5).createEmptyMatrix();
     expect(emptyMatrix.length).toEqual(1);
     expect(emptyMatrix[0].length).toEqual(5);
     for(let i = 0; i < 1; i++){
@@ -41,6 +41,17 @@ describe('Matrix tests', () => {
         expect(emptyMatrix[i][j].isFlagged).toEqual(false);
         expect(emptyMatrix[i][j].isRevealed).toEqual(false);
       }
+    }
+  })
+
+  it('generateRandomPosition test', () => {
+    const matrix = new Matrix(5,5);
+    for(let i = 0; i < 20; i++){
+      let position = matrix.generateRandomPosition();
+      expect(position[0]).toBeGreaterThanOrEqual(0);
+      expect(position[0]).toBeLessThan(5);
+      expect(position[1]).toBeGreaterThanOrEqual(0);
+      expect(position[1]).toBeLessThan(5);
     }
   })
 

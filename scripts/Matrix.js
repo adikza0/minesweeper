@@ -27,4 +27,12 @@ export class Matrix {
     console.log(emptyMatrix);
     return emptyMatrix;
   }
+
+  generateBombs(bombCount){
+  
+  }
+  generateRandomPosition(){
+    return [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
+  }
+
 }
