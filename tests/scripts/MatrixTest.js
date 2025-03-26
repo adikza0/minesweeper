@@ -127,4 +127,25 @@ describe('Matrix tests', () => {
     expect(matrix.countAdjacentMines(4, 0)).toEqual(3);
   })
 
+  it('fillAdjacentMines test', () => {
+    const matrix = new Matrix(6, 5, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[1][1].insertBomb();
+    matrix.matrix[2][2].insertBomb();
+    matrix.matrix[3][3].insertBomb();
+    matrix.matrix[4][4].insertBomb();
+    matrix.matrix[0][3].insertBomb();
+    matrix.matrix[1][3].insertBomb();
+    matrix.matrix[1][4].insertBomb();
+    matrix.fillAdjacentMines();
+    expect(matrix.matrix[0][0].adjacentMines).toEqual(1);
+    expect(matrix.matrix[1][1].adjacentMines).toEqual(2);
+    expect(matrix.matrix[2][2].adjacentMines).toEqual(3);
+    expect(matrix.matrix[3][3].adjacentMines).toEqual(2);
+    expect(matrix.matrix[4][4].adjacentMines).toEqual(1);
+    expect(matrix.matrix[2][4].adjacentMines).toEqual(3);
+    expect(matrix.matrix[5][2].adjacentMines).toEqual(0);
+    expect(matrix.matrix[4][0].adjacentMines).toEqual(0);
+  })
+
 });

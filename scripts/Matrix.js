@@ -83,4 +83,12 @@ export class Matrix {
     }
     return adjacentMines;
   }
+
+  fillAdjacentMines(){
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+        this.matrix[i][j].adjacentMines = this.countAdjacentMines(j, i);
+      }
+    }
+  }
 }
