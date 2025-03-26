@@ -14,12 +14,13 @@ export class Matrix {
     this.rows = rows;
     this.columns = columns;
     this.bombCount = bombCount;
-    this.generateMatrix(bombCount);
+    this.generateMatrix();
 
   }
   generateMatrix() {
     this.createEmptyMatrix();
     this.generateBombs();
+    this.fillAdjacentMines();
   }
   createEmptyMatrix() {
     const emptyMatrix = [];
@@ -34,6 +35,9 @@ export class Matrix {
   }
 
   generateBombs() {
+    if (this.bombCount >= this.rows * this.columns) {
+      throw new Error("Počet min je větší nebo roven počtu políček.");
+    }
     let x;
     let y;
     for (let i = 0; i < this.bombCount; i++) {

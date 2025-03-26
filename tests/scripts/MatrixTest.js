@@ -148,4 +148,8 @@ describe('Matrix tests', () => {
     expect(matrix.matrix[4][0].adjacentMines).toEqual(0);
   })
 
+  it('generate matrix with more mines than cells', () => {
+    expect(() => new Matrix(5, 5, 25)).toThrowError("Počet min je větší nebo roven počtu políček.");
+    expect(() => new Matrix(5, 5, 28)).toThrowError("Počet min je větší nebo roven počtu políček.");
+  })
 });
