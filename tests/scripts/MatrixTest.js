@@ -106,4 +106,25 @@ describe('Matrix tests', () => {
     expect(matrix.doesCellExist(4, 4)).toEqual(false);
   })
 
+  it('countAdjacentMines test', () => {
+    const matrix = new Matrix(6, 5, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[1][1].insertBomb();
+    matrix.matrix[2][2].insertBomb();
+    matrix.matrix[3][3].insertBomb();
+    matrix.matrix[4][4].insertBomb();
+    matrix.matrix[0][3].insertBomb();
+    matrix.matrix[1][3].insertBomb();
+    matrix.matrix[1][4].insertBomb();
+    console.log(matrix.matrix);
+    expect(matrix.countAdjacentMines(0, 0)).toEqual(1);
+    expect(matrix.countAdjacentMines(1, 1)).toEqual(2);
+    expect(matrix.countAdjacentMines(2, 2)).toEqual(3);
+    expect(matrix.countAdjacentMines(3, 3)).toEqual(2);
+    expect(matrix.countAdjacentMines(4, 4)).toEqual(1);
+    expect(matrix.countAdjacentMines(2, 4)).toEqual(1);
+    expect(matrix.countAdjacentMines(5, 2)).toEqual(1);
+    expect(matrix.countAdjacentMines(4, 0)).toEqual(3);
+  })
+
 });

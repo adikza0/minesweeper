@@ -1,4 +1,4 @@
-import {Cell} from './Cell.js';
+import { Cell } from './Cell.js';
 export class Matrix {
   rows;
   columns;
@@ -10,30 +10,30 @@ export class Matrix {
     }
     if (columns < 1) {
       throw new Error("Matice musí mít alespoň 1 sloupec.");
-    } 
+    }
     this.rows = rows;
     this.columns = columns;
     this.bombCount = bombCount;
-    this.generateMatrix();
-    //this.matrix = this.createEmptyMatrix();
+    this.generateMatrix(bombCount);
+
   }
-  generateMatrix(){
+  generateMatrix() {
     this.createEmptyMatrix();
-    this.generateBombs(10);
+    this.generateBombs();
   }
-  createEmptyMatrix(){
+  createEmptyMatrix() {
     const emptyMatrix = [];
-    for(let i = 0; i < this.rows; i++){
+    for (let i = 0; i < this.rows; i++) {
       emptyMatrix.push([]);
-      for(let j = 0; j < this.columns; j++){
+      for (let j = 0; j < this.columns; j++) {
         emptyMatrix[i].push(new Cell());
       }
-    
+
     }
     this.matrix = emptyMatrix;
   }
 
-  generateBombs(bombCount){
+  generateBombs() {
     let x;
     let y;
     for (let i = 0; i < this.bombCount; i++) {
@@ -46,11 +46,11 @@ export class Matrix {
     }
   }
 
-  returnRemainingBombCount(){
+  returnRemainingBombCount() {
     let bombCount = 0;
-    for(let i = 0; i < this.rows; i++){
-      for(let j = 0; j < this.columns; j++){
-        if(this.matrix[i][j].isMine){
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+        if (this.matrix[i][j].isMine) {
           bombCount++;
         }
       }
@@ -58,14 +58,29 @@ export class Matrix {
     return bombCount;
   }
 
-  generateRandomPosition(){
+  generateRandomPosition() {
     return [Math.floor(Math.random() * this.columns), Math.floor(Math.random() * this.rows)];
   }
 
-  doesCellExist(x, y){
-    if(x < 0 || x >= this.columns || y < 0 || y >= this.rows){
+  doesCellExist(x, y) {
+    if (x < 0 || x >= this.columns || y < 0 || y >= this.rows) {
       return false;
     }
     return true;
+  }
+
+  countAdjacentMines(x, y) {
+    let adjacentMines = 0;
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (this.doesCellExist(x + i, y + j)) {
+          if (i === 0 && j === 0) continue;
+          if (this.matrix[y + j][x + i].isMine) {
+            adjacentMines++;
+          }
+        }
+      }
+    }
+    return adjacentMines;
   }
 }
