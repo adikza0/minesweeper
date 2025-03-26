@@ -3,19 +3,19 @@ import {Cell} from '../../scripts/Cell.js';
 
 describe('Matrix tests', () => {
   it('constructor test', () => {
-    let matrix = new Matrix(5, 5);
+    let matrix = new Matrix(5, 5, 0);
     expect(matrix.rows).toEqual(5);
     expect(matrix.columns).toEqual(5);
     expect(matrix instanceof Matrix).toEqual(true);
   })
   
   it('constructor test with invalid matrix size', () => {
-    expect(() => new Matrix(0, 5)).toThrowError("Matice musí mít alespoň 1 řádek.");
-    expect(() => new Matrix(5, 0)).toThrowError("Matice musí mít alespoň 1 sloupec.");
+    expect(() => new Matrix(0, 5, 0)).toThrowError("Matice musí mít alespoň 1 řádek.");
+    expect(() => new Matrix(5, 0, 0)).toThrowError("Matice musí mít alespoň 1 sloupec.");
   })
 
   it('createEmptyMatrix test', () => {
-    let emptyMatrix = new Matrix(5, 5);
+    let emptyMatrix = new Matrix(5, 5, 0);
     emptyMatrix.createEmptyMatrix();
     expect(emptyMatrix.matrix.length).toEqual(5);
     expect(emptyMatrix.matrix[0].length).toEqual(5);
@@ -30,7 +30,7 @@ describe('Matrix tests', () => {
       }
     }
 
-    emptyMatrix = new Matrix(1, 5);
+    emptyMatrix = new Matrix(1, 5, 0);
     emptyMatrix.createEmptyMatrix();
     expect(emptyMatrix.matrix.length).toEqual(1);
     expect(emptyMatrix.matrix[0].length).toEqual(5);
@@ -47,7 +47,7 @@ describe('Matrix tests', () => {
   })
 
   it('generateRandomPosition test', () => {
-    const matrix = new Matrix(5,5);
+    const matrix = new Matrix(5, 5, 0);
     for(let i = 0; i < 20; i++){
       let position = matrix.generateRandomPosition();
       expect(position[0]).toBeGreaterThanOrEqual(0);
@@ -58,9 +58,7 @@ describe('Matrix tests', () => {
   })
 
   it('generateBombs test with square matrix',() => {
-    const matrix = new Matrix(5,5);
-    matrix.createEmptyMatrix();
-    matrix.generateBombs(5);
+    const matrix = new Matrix(5, 5, 5);
     let bombCount = 0;
     for(let i = 0; i < 5; i++){
       for(let j = 0; j < 5; j++){
@@ -73,9 +71,7 @@ describe('Matrix tests', () => {
   })
 
   it('generateBombs test with rectangle matrix',() => {
-    const matrix = new Matrix(10,5);
-    matrix.createEmptyMatrix();
-    matrix.generateBombs(10);
+    const matrix = new Matrix(10, 5, 10);
     let bombCount = 0;
     for(let i = 0; i < 10; i++){
       for(let j = 0; j < 5; j++){
@@ -90,19 +86,13 @@ describe('Matrix tests', () => {
   it('returnRemainingBombCount test', () => {
     let matrix;
 
-    matrix = new Matrix(5,5);
-    matrix.createEmptyMatrix();
-    matrix.generateBombs(5);
+    matrix = new Matrix(5, 5, 5);
     expect(matrix.returnRemainingBombCount()).toEqual(5);
 
-    matrix = new Matrix(2,6);
-    matrix.createEmptyMatrix();
-    matrix.generateBombs(8);
+    matrix = new Matrix(2, 6, 8);
     expect(matrix.returnRemainingBombCount()).toEqual(8);
 
-    matrix = new Matrix(5,12);
-    matrix.createEmptyMatrix();
-    matrix.generateBombs(20);
+    matrix = new Matrix(5, 12, 20);
     expect(matrix.returnRemainingBombCount()).toEqual(20);
   })
 

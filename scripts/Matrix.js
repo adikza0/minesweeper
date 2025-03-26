@@ -2,8 +2,9 @@ import {Cell} from './Cell.js';
 export class Matrix {
   rows;
   columns;
+  bombCount;
   matrix;
-  constructor(rows, columns) {
+  constructor(rows, columns, bombCount) {
     if (rows < 1) {
       throw new Error("Matice musí mít alespoň 1 řádek.");
     }
@@ -12,10 +13,14 @@ export class Matrix {
     } 
     this.rows = rows;
     this.columns = columns;
-    this.matrix= [];
+    this.bombCount = bombCount;
+    this.generateMatrix();
     //this.matrix = this.createEmptyMatrix();
   }
-
+  generateMatrix(){
+    this.createEmptyMatrix();
+    this.generateBombs();
+  }
   createEmptyMatrix(){
     const emptyMatrix = [];
     for(let i = 0; i < this.rows; i++){
@@ -28,10 +33,10 @@ export class Matrix {
     this.matrix = emptyMatrix;
   }
 
-  generateBombs(bombCount){
+  generateBombs(){
     let x;
     let y;
-    for (let i = 0; i < bombCount; i++) {
+    for (let i = 0; i < this.bombCount; i++) {
       [x, y] = this.generateRandomPosition();
 
       while (this.matrix[y][x].isMine) {
