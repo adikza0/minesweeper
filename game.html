@@ -3,41 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minesweeper 5x5</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      text-align: center; 
-    }
-    .game-container { 
-      display: inline-block; 
-      margin: 20px auto; 
-    }
-    .row { 
-      display: flex; 
-    }
-    .cell { 
-      width: 30px; 
-      height: 30px; 
-      background: #ddd; 
-      text-align: center; 
-      line-height: 30px; 
-      border: 1px solid #999; 
-      font-weight: bold; 
-      cursor: pointer; 
-    }
-    .cell.revealed { 
-      background: #bbb; 
-      cursor: default; 
-    }
-    .cell.mine { 
-      background: red; 
-      color: white; 
-    }
-  </style>
+  <title>Minesweeper</title>
+  <link rel="stylesheet" href="./styles/game.css">
 </head>
 <body>
-  <h1>Minesweeper 5x5</h1>
+  <h1>Minesweeper</h1>
   <div class="game-container js-game-container">
     <!--
     <div class="row">

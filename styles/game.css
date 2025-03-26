@@ -1,0 +1,29 @@
+body { 
+  font-family: Arial, sans-serif; 
+  text-align: center; 
+}
+.game-container { 
+  display: inline-block; 
+  margin: 20px auto; 
+}
+.row { 
+  display: flex; 
+}
+.cell { 
+  width: 30px; 
+  height: 30px; 
+  background: #ddd; 
+  text-align: center; 
+  line-height: 30px; 
+  border: 1px solid #999; 
+  font-weight: bold; 
+  cursor: pointer; 
+}
+.cell.revealed { 
+  background: #bbb; 
+  cursor: default; 
+}
+.cell.mine { 
+  background: red; 
+  color: white; 
+}
