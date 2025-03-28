@@ -14,5 +14,8 @@ export class Cell {
   insertBomb() {
     this.isMine = true;
   }
+  reveal() {
+    this.isRevealed = true;
+  }
 }
 const cell = new Cell();

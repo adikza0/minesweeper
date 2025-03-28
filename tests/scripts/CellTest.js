@@ -14,4 +14,10 @@ describe('Cell tests', () => {
     cell.insertBomb();
     expect(cell.isMine).toEqual(true);
   })
+  it('reveal test', () => {
+    const cell = new Cell();
+    expect(cell.isRevealed).toEqual(false);
+    cell.reveal();
+    expect(cell.isRevealed).toEqual(true);
+  })
 })
