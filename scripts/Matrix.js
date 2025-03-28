@@ -95,4 +95,9 @@ export class Matrix {
       }
     }
   }
+  revealCell(x, y) {
+    if (this.doesCellExist(x, y)) {
+      this.matrix[y][x].isRevealed = true;
+    }
+  }
 }

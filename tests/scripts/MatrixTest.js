@@ -152,4 +152,14 @@ describe('Matrix tests', () => {
     expect(() => new Matrix(5, 5, 25)).toThrowError("Počet min je větší nebo roven počtu políček.");
     expect(() => new Matrix(5, 5, 28)).toThrowError("Počet min je větší nebo roven počtu políček.");
   })
+  it('reveal cell test', () => {
+    const matrix = new Matrix(5, 5, 0);
+    matrix.matrix[0][0].insertBomb();
+    expect(matrix.matrix[0][0].isRevealed).toEqual(false);
+    matrix.revealCell(0, 0);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[4][4].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][4].isRevealed).toEqual(false);
+    expect(matrix.matrix[4][0].isRevealed).toEqual(false);
+  })
 });

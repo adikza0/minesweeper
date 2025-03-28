@@ -1,7 +1,8 @@
 import { Matrix } from './Matrix.js';
 
-const testMatrix = new Matrix(5, 10, 5);
-generateHTML(testMatrix);
+const matrix = new Matrix(4, 4, 0);
+
+generateHTML(matrix);
 
 
 export function generateHTML(matrix) {
@@ -16,11 +17,22 @@ export function generateHTML(matrix) {
         }
         else {
           content = matrix.matrix[i][j].adjacentMines;
+          if (content === 0) {
+            content = '';
+          }
         }
       }
-      gameHTML += `<div class="cell" data-x="${j}" data-y="${i}">${content}</div>`;
+      gameHTML += `<div class="cell${matrix.matrix[i][j].isRevealed ? ' revealed' : ''}" data-x="${j}" data-y="${i}">${content}</div>`;
     }
     gameHTML += '</div>';
   }
   document.querySelector('.js-game-container').innerHTML = gameHTML;
+  document.querySelectorAll('.cell').forEach(cell => {
+    cell.addEventListener('click', cell => {
+      const x = cell.target.dataset.x;
+      const y = cell.target.dataset.y;
+      matrix.revealCell(x, y);
+      generateHTML(matrix);
+    })
+  })
 };
