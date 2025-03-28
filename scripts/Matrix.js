@@ -75,16 +75,13 @@ export class Matrix {
 
   countAdjacentMines(x, y) {
     let adjacentMines = 0;
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
-        if (this.doesCellExist(x + i, y + j)) {
-          if (i === 0 && j === 0) continue;
-          if (this.matrix[y + j][x + i].isMine) {
-            adjacentMines++;
-          }
-        }
+    const adjacentCells = this.returnAdjacentCells(x, y);
+    adjacentCells.forEach(cell => {
+      if (cell.isMine) {
+        adjacentMines++;
       }
-    }
+    })
+
     return adjacentMines;
   }
 
@@ -99,5 +96,22 @@ export class Matrix {
     if (this.doesCellExist(x, y)) {
       this.matrix[y][x].isRevealed = true;
     }
+  }
+
+  returnAdjacentCells(x, y){
+    let adjacentCells = [];
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (this.doesCellExist(x + i, y + j)) {
+          if (i === 0 && j === 0) continue;
+          adjacentCells.push(this.matrix[y + j][x + i]);
+        }
+      }
+    }
+    return adjacentCells;
+  }
+
+  revealEmptyAdjacentCells(){
+
   }
 }

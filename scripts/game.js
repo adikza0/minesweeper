@@ -1,6 +1,9 @@
 import { Matrix } from './Matrix.js';
 
 const matrix = new Matrix(4, 4, 0);
+matrix.matrix[0][0].insertBomb();
+matrix.matrix[0][1].insertBomb();
+matrix.fillAdjacentMines();
 
 generateHTML(matrix);
 
