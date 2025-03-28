@@ -110,8 +110,17 @@ export class Matrix {
     }
     return adjacentCells;
   }
+  revealAdjacentCells(x, y){
+    const adjacentCells = this.returnAdjacentCells(x, y);
+    adjacentCells.forEach(cell => {
+      if (!cell.isRevealed && !cell.isFlagged) {
+        cell.reveal();
+      }
+    })
+  }
 
-  revealEmptyAdjacentCells(){
+  revealEmptyAdjacentCells(x, y) {
+    
 
   }
 }

@@ -4,6 +4,7 @@ const matrix = new Matrix(4, 4, 0);
 matrix.matrix[0][0].insertBomb();
 matrix.matrix[0][1].insertBomb();
 matrix.fillAdjacentMines();
+matrix.revealAdjacentCells(0, 0);
 
 generateHTML(matrix);
 

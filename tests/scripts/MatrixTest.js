@@ -1,5 +1,5 @@
-import {Matrix} from '../../scripts/Matrix.js';
-import {Cell} from '../../scripts/Cell.js';
+import { Matrix } from '../../scripts/Matrix.js';
+import { Cell } from '../../scripts/Cell.js';
 
 describe('Matrix tests', () => {
   it('constructor test', () => {
@@ -8,7 +8,7 @@ describe('Matrix tests', () => {
     expect(matrix.columns).toEqual(5);
     expect(matrix instanceof Matrix).toEqual(true);
   })
-  
+
   it('constructor test with invalid matrix size', () => {
     expect(() => new Matrix(0, 5, 0)).toThrowError("Matice musí mít alespoň 1 řádek.");
     expect(() => new Matrix(5, 0, 0)).toThrowError("Matice musí mít alespoň 1 sloupec.");
@@ -19,8 +19,8 @@ describe('Matrix tests', () => {
     emptyMatrix.createEmptyMatrix();
     expect(emptyMatrix.matrix.length).toEqual(5);
     expect(emptyMatrix.matrix[0].length).toEqual(5);
-    for(let i = 0; i < 5; i++){
-      for(let j = 0; j < 5; j++){
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
         expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true);
         expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true)
         expect(emptyMatrix.matrix[j][i].adjacentMines).toEqual(0);
@@ -34,8 +34,8 @@ describe('Matrix tests', () => {
     emptyMatrix.createEmptyMatrix();
     expect(emptyMatrix.matrix.length).toEqual(1);
     expect(emptyMatrix.matrix[0].length).toEqual(5);
-    for(let i = 0; i < 1; i++){
-      for(let j = 0; j < 5; j++){
+    for (let i = 0; i < 1; i++) {
+      for (let j = 0; j < 5; j++) {
         expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true);
         expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true)
         expect(emptyMatrix.matrix[i][j].adjacentMines).toEqual(0);
@@ -48,7 +48,7 @@ describe('Matrix tests', () => {
 
   it('generateRandomPosition test', () => {
     const matrix = new Matrix(5, 5, 0);
-    for(let i = 0; i < 20; i++){
+    for (let i = 0; i < 20; i++) {
       let position = matrix.generateRandomPosition();
       expect(position[0]).toBeGreaterThanOrEqual(0);
       expect(position[0]).toBeLessThan(5);
@@ -57,12 +57,12 @@ describe('Matrix tests', () => {
     }
   })
 
-  it('generateBombs test with square matrix',() => {
+  it('generateBombs test with square matrix', () => {
     const matrix = new Matrix(5, 5, 5);
     let bombCount = 0;
-    for(let i = 0; i < 5; i++){
-      for(let j = 0; j < 5; j++){
-        if(matrix.matrix[i][j].isMine){
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (matrix.matrix[i][j].isMine) {
           bombCount++;
         }
       }
@@ -70,12 +70,12 @@ describe('Matrix tests', () => {
     expect(bombCount).toEqual(5);
   })
 
-  it('generateBombs test with rectangle matrix',() => {
+  it('generateBombs test with rectangle matrix', () => {
     const matrix = new Matrix(10, 5, 10);
     let bombCount = 0;
-    for(let i = 0; i < 10; i++){
-      for(let j = 0; j < 5; j++){
-        if(matrix.matrix[i][j].isMine){
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (matrix.matrix[i][j].isMine) {
           bombCount++;
         }
       }
@@ -161,5 +161,17 @@ describe('Matrix tests', () => {
     expect(matrix.matrix[4][4].isRevealed).toEqual(false);
     expect(matrix.matrix[0][4].isRevealed).toEqual(false);
     expect(matrix.matrix[4][0].isRevealed).toEqual(false);
+  })
+  it('revealAdjacentCells test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][1].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.revealAdjacentCells(0, 0);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][1].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][2].isRevealed).toEqual(false);
+    expect(matrix.matrix[1][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[1][1].isRevealed).toEqual(true);
   })
 });
