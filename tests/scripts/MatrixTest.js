@@ -169,7 +169,7 @@ describe('Matrix tests', () => {
     matrix.matrix[0][0].insertBomb();
     matrix.matrix[0][1].insertBomb();
     matrix.fillAdjacentMines();
-    matrix.revealAdjacentCells(0, 0);
+    matrix.revealCell(0, 0);
     expect(matrix.matrix[0][0].isRevealed).toEqual(false);
     expect(matrix.matrix[0][1].isRevealed).toEqual(true);
     expect(matrix.matrix[0][2].isRevealed).toEqual(false);
@@ -211,5 +211,5 @@ describe('Matrix tests', () => {
 });
 
 
-//TODO: revealAdjacentCells (add to reveal cell test),returnAdjacentCells test
+//TODO: revealAdjacentCells (add to reveal cell test)
 

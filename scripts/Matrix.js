@@ -22,7 +22,7 @@ export class Matrix {
     this.generateBombs();
     this.fillAdjacentMines();
   }
-  
+
   createEmptyMatrix() {
     const emptyMatrix = [];
     for (let i = 0; i < this.rows; i++) {
@@ -119,19 +119,6 @@ export class Matrix {
     }
     return adjacentCells;
   }
-
-  revealAdjacentCells(x, y) {
-    const adjacentCells = this.returnAdjacentCells(x, y);
-    adjacentCells.forEach(cell => {
-      if (!cell.isRevealed) {
-        cell.reveal();
-      }
-    })
-  }
-
-
-
-
 
   revealAdjacentEmptyCells(x, y) {
     //Vytvoříme frontu a začneme od výchozí buňky.
