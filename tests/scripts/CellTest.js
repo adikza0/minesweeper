@@ -20,6 +20,15 @@ describe('Cell tests', () => {
     cell.reveal();
     expect(cell.isRevealed).toEqual(true);
   })
+
+  it ('changeFlagState test', () => {
+    const cell = new Cell();
+    expect(cell.isFlagged).toEqual(false);
+    cell.changeFlagState();
+    expect(cell.isFlagged).toEqual(true);
+    cell.changeFlagState();
+    expect(cell.isFlagged).toEqual(false);
+  })
 })
 
 

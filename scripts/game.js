@@ -1,13 +1,7 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(5, 5, 0);
-    matrix.matrix[0][0].insertBomb();
+const matrix = new Matrix(10, 10, 5);
 
-
-
-/*matrix.matrix[0][0].insertBomb();
-matrix.matrix[0][1].insertBomb();*/
-matrix.fillAdjacentMines();
 
 generateHTML(matrix);
 console.log(matrix.matrix)
@@ -20,6 +14,8 @@ export function generateHTML(matrix) {
       if (matrix.matrix[i][j].isRevealed) {
         if (matrix.matrix[i][j].isMine) {
           content = '💣';
+        } else if (matrix.matrix[i][j].isFlagged){
+          content = '🚩';
         }
         else {
           content = matrix.matrix[i][j].adjacentMines;
@@ -42,6 +38,9 @@ export function generateHTML(matrix) {
         matrix.revealAdjacentEmptyCells(x, y);
       }*/
       generateHTML(matrix);
+    })
+    cell.addEventListener('oncontextmenu', cell => {
+      
     })
   })
 };

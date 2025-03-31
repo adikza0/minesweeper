@@ -15,12 +15,18 @@ export class Cell {
       this.x = x;
       this.y = y;
     }
+    //remake so x and y are not in if statement
   }
 
   insertBomb() {
     this.isMine = true;
   }
+  
   reveal() {
     this.isRevealed = true;
+  }
+
+  changeFlagState() {
+    this.isFlagged = !this.isFlagged;
   }
 }
