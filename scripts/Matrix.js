@@ -22,6 +22,7 @@ export class Matrix {
     this.generateBombs();
     this.fillAdjacentMines();
   }
+  
   createEmptyMatrix() {
     const emptyMatrix = [];
     for (let i = 0; i < this.rows; i++) {
@@ -94,9 +95,14 @@ export class Matrix {
   }
   revealCell(x, y) {
     if (this.doesCellExist(x, y)) {
-      this.matrix[y][x].isRevealed = true;
-      if (this.matrix[y][x].adjacentMines === 0) {
-        this.revealAdjacentEmptyCells(x, y);
+      if (this.matrix[y][x].isMine) {
+        this.matrix[y][x].isRevealed = true;
+        //TODO: Add code for game over
+      } else {
+        this.matrix[y][x].isRevealed = true;
+        if (this.matrix[y][x].adjacentMines === 0) {
+          this.revealAdjacentEmptyCells(x, y);
+        }
       }
     }
   }
@@ -133,9 +139,9 @@ export class Matrix {
     let queue = [this.matrix[y][x]];
 
     //Procházíme frontu – pokud buňka nebyla odhalena, odhalíme ji a označíme jako prohledanou
-    while(queue.length > 0){
+    while (queue.length > 0) {
       let cell = queue.shift();
-      if(searchedCells.has(cell)){
+      if (searchedCells.has(cell)) {
         continue;
       }
       searchedCells.add(cell);
