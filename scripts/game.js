@@ -34,13 +34,14 @@ export function generateHTML(matrix) {
       const x = parseInt(cell.target.dataset.x);
       const y = parseInt(cell.target.dataset.y);
       matrix.revealCell(x, y);
-      /*if(matrix.matrix[y][x].adjacentMines === 0){
-        matrix.revealAdjacentEmptyCells(x, y);
-      }*/
       generateHTML(matrix);
     })
-    cell.addEventListener('oncontextmenu', cell => {
-      
+
+    cell.addEventListener('contextmenu', cell => {
+      const x = parseInt(cell.target.dataset.x);
+      const y = parseInt(cell.target.dataset.y);
+      matrix.changeFlagStateOnCell(x, y);
+      generateHTML(matrix);
     })
   })
 };

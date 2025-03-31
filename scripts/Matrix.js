@@ -145,4 +145,11 @@ export class Matrix {
       }
     }
   }
+
+  changeFlagStateOnCell(x, y) {
+    //if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
+      this.matrix[y][x].changeFlagState();
+      
+    //}
+  }
 }
