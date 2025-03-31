@@ -27,7 +27,7 @@ export class Matrix {
     for (let i = 0; i < this.rows; i++) {
       emptyMatrix.push([]);
       for (let j = 0; j < this.columns; j++) {
-        emptyMatrix[i].push(new Cell());
+        emptyMatrix[i].push(new Cell(j, i));
       }
 
     }
@@ -85,7 +85,7 @@ export class Matrix {
     return adjacentMines;
   }
 
-  fillAdjacentMines(){
+  fillAdjacentMines() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.columns; j++) {
         this.matrix[i][j].adjacentMines = this.countAdjacentMines(j, i);
@@ -95,10 +95,13 @@ export class Matrix {
   revealCell(x, y) {
     if (this.doesCellExist(x, y)) {
       this.matrix[y][x].isRevealed = true;
+      if (this.matrix[y][x].adjacentMines === 0) {
+        this.revealAdjacentEmptyCells(x, y);
+      }
     }
   }
 
-  returnAdjacentCells(x, y){
+  returnAdjacentCells(x, y) {
     let adjacentCells = [];
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
@@ -110,17 +113,43 @@ export class Matrix {
     }
     return adjacentCells;
   }
-  revealAdjacentCells(x, y){
+
+  revealAdjacentCells(x, y) {
     const adjacentCells = this.returnAdjacentCells(x, y);
     adjacentCells.forEach(cell => {
-      if (!cell.isRevealed && !cell.isFlagged) {
+      if (!cell.isRevealed) {
         cell.reveal();
       }
     })
   }
 
-  revealEmptyAdjacentCells(x, y) {
-    
 
+
+
+
+  revealAdjacentEmptyCells(x, y) {
+    //Vytvoříme frontu a začneme od výchozí buňky.
+    let searchedCells = new Set();
+    let queue = [this.matrix[y][x]];
+
+    //Procházíme frontu – pokud buňka nebyla odhalena, odhalíme ji a označíme jako prohledanou
+    while(queue.length > 0){
+      let cell = queue.shift();
+      if(searchedCells.has(cell)){
+        continue;
+      }
+      searchedCells.add(cell);
+      cell.reveal();
+
+      //Pokud má buňka adjacentMines === 0, přidáme do fronty všechny její neodhalené sousedy.
+      if (cell.adjacentMines === 0) {
+        let adjacentCells = this.returnAdjacentCells(cell.x, cell.y);
+        adjacentCells.forEach(adjacentCell => {
+          if (!adjacentCell.isRevealed && !searchedCells.has(adjacentCell)) {
+            queue.push(adjacentCell);
+          }
+        });
+      }
+    }
   }
 }

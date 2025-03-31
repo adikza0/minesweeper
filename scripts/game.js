@@ -1,14 +1,16 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(4, 4, 0);
-matrix.matrix[0][0].insertBomb();
-matrix.matrix[0][1].insertBomb();
+const matrix = new Matrix(5, 5, 0);
+    matrix.matrix[0][0].insertBomb();
+
+
+
+/*matrix.matrix[0][0].insertBomb();
+matrix.matrix[0][1].insertBomb();*/
 matrix.fillAdjacentMines();
-matrix.revealAdjacentCells(0, 0);
 
 generateHTML(matrix);
-
-
+console.log(matrix.matrix)
 export function generateHTML(matrix) {
   let gameHTML = '';
   for (let i = 0; i < matrix.rows; i++) {
@@ -33,9 +35,12 @@ export function generateHTML(matrix) {
   document.querySelector('.js-game-container').innerHTML = gameHTML;
   document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', cell => {
-      const x = cell.target.dataset.x;
-      const y = cell.target.dataset.y;
+      const x = parseInt(cell.target.dataset.x);
+      const y = parseInt(cell.target.dataset.y);
       matrix.revealCell(x, y);
+      /*if(matrix.matrix[y][x].adjacentMines === 0){
+        matrix.revealAdjacentEmptyCells(x, y);
+      }*/
       generateHTML(matrix);
     })
   })

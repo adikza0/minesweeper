@@ -21,3 +21,6 @@ describe('Cell tests', () => {
     expect(cell.isRevealed).toEqual(true);
   })
 })
+
+
+//TODO: Remake that new Cell always needs x and y
