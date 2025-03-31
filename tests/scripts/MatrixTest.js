@@ -153,15 +153,23 @@ describe('Matrix tests', () => {
     expect(() => new Matrix(5, 5, 28)).toThrowError("Počet min je větší nebo roven počtu políček.");
   })
   
-  it('reveal cell test', () => {
+  it('revealCell test', () => {
     const matrix = new Matrix(5, 5, 0);
     matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+
     expect(matrix.matrix[0][0].isRevealed).toEqual(false);
     matrix.revealCell(0, 0);
     expect(matrix.matrix[0][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[1][1].isRevealed).toEqual(false);
+    expect(matrix.matrix[2][2].isRevealed).toEqual(false);
     expect(matrix.matrix[4][4].isRevealed).toEqual(false);
-    expect(matrix.matrix[0][4].isRevealed).toEqual(false);
-    expect(matrix.matrix[4][0].isRevealed).toEqual(false);
+    matrix.revealCell(1, 1);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[1][1].isRevealed).toEqual(true);
+    expect(matrix.matrix[2][2].isRevealed).toEqual(false);
+    expect(matrix.matrix[4][4].isRevealed).toEqual(false);
+
   })
 
   it('revealAdjacentCells test', () => {
@@ -169,12 +177,15 @@ describe('Matrix tests', () => {
     matrix.matrix[0][0].insertBomb();
     matrix.matrix[0][1].insertBomb();
     matrix.fillAdjacentMines();
-    matrix.revealCell(0, 0);
+    matrix.revealCell(3, 3);
     expect(matrix.matrix[0][0].isRevealed).toEqual(false);
-    expect(matrix.matrix[0][1].isRevealed).toEqual(true);
-    expect(matrix.matrix[0][2].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][1].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][2].isRevealed).toEqual(true);
     expect(matrix.matrix[1][0].isRevealed).toEqual(true);
     expect(matrix.matrix[1][1].isRevealed).toEqual(true);
+    expect(matrix.matrix[2][2].isRevealed).toEqual(true);
+    expect(matrix.matrix[2][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][3].isRevealed).toEqual(true);
   })
 
   it('returnAdjacentCells test', () => {
@@ -209,7 +220,4 @@ describe('Matrix tests', () => {
     expect(adjacentCells.length).toEqual(8);
   })
 });
-
-
-//TODO: revealAdjacentCells (add to reveal cell test)
 
