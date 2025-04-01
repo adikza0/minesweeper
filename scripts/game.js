@@ -5,6 +5,7 @@ matrix.matrix[0][0].insertBomb();
 matrix.fillAdjacentMines();
 matrix.changeFlagStateOnCell(0,0);
 matrix.changeFlagStateOnCell(0, 1);
+matrix.revealCell(3,3);
 generateHTML(matrix);
 
 

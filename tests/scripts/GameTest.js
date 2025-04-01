@@ -2,7 +2,10 @@ import { generateHTML } from '../../scripts/game.js';
 import { Matrix } from '../../scripts/Matrix.js';
 
 describe('game test suite', () => {
-
+  afterAll(() => {
+    document.querySelector('.js-game-container').innerHTML = '';
+  })
+  
   it('10x5 unrevealed matrix HTML check', () => {
     const matrix = new Matrix(5, 10, 5);
     generateHTML(matrix);
@@ -23,8 +26,23 @@ describe('game test suite', () => {
     generateHTML(matrix);
     expect(document.querySelector('.js-game-container').innerHTML).toEqual(`<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell revealed" data-x="2" data-y="0">2</div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="1">3</div><div class="cell" data-x="1" data-y="1"></div><div class="cell revealed" data-x="2" data-y="1">2</div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="2">1</div><div class="cell revealed" data-x="1" data-y="2">1</div><div class="cell revealed" data-x="2" data-y="2">1</div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>`);
   })
-  afterAll(() => {
-    document.querySelector('.js-game-container').innerHTML = '';
-  })
+  
+
+  it('HTML check of right clicking cells', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    generateHTML(matrix);
+    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>');
+   
+    matrix.changeFlagStateOnCell(0,0);
+    matrix.changeFlagStateOnCell(0, 1);
+    generateHTML(matrix);
+    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0">🚩</div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1">🚩</div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>');
+    matrix.revealCell(3,3);
+    generateHTML(matrix);
+    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0">🚩</div><div class="cell revealed" data-x="1" data-y="0">1</div><div class="cell revealed" data-x="2" data-y="0"></div><div class="cell revealed" data-x="3" data-y="0"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="1">1</div><div class="cell revealed" data-x="1" data-y="1">1</div><div class="cell revealed" data-x="2" data-y="1"></div><div class="cell revealed" data-x="3" data-y="1"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="2"></div><div class="cell revealed" data-x="1" data-y="2"></div><div class="cell revealed" data-x="2" data-y="2"></div><div class="cell revealed" data-x="3" data-y="2"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="3"></div><div class="cell revealed" data-x="1" data-y="3"></div><div class="cell revealed" data-x="2" data-y="3"></div><div class="cell revealed" data-x="3" data-y="3"></div></div>');
+  });
+
 }
 )

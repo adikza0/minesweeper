@@ -228,17 +228,6 @@ describe('Matrix tests', () => {
     matrix.changeFlagStateOnCell(1, 0);
     expect(matrix.matrix[0][1].isFlagged).toEqual(false);
   })
-  it('HTML check of right clicking cells', () => {
-    const matrix = new Matrix(4, 4, 0);
-    matrix.matrix[0][0].insertBomb();
-    matrix.fillAdjacentMines();
-    generateHTML(matrix);
-    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>');
-   
-    matrix.changeFlagStateOnCell(0,0);
-    matrix.changeFlagStateOnCell(0, 1);
-    generateHTML(matrix);
-    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0">🚩</div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1">🚩</div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>')
-  });
+  
 });
 
