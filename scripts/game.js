@@ -1,10 +1,14 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(10, 10, 10);
-
-
+const matrix = new Matrix(4, 4, 0);
+matrix.matrix[0][0].insertBomb();
+matrix.fillAdjacentMines();
+matrix.changeFlagStateOnCell(0,0);
+matrix.changeFlagStateOnCell(0, 1);
 generateHTML(matrix);
-console.log(matrix.matrix)
+
+
+
 export function generateHTML(matrix) {
   let gameHTML = '';
   for (let i = 0; i < matrix.rows; i++) {
@@ -33,6 +37,11 @@ export function generateHTML(matrix) {
     gameHTML += '</div>';
   }
   document.querySelector('.js-game-container').innerHTML = gameHTML;
+  addEventListeners();
+};
+
+
+function addEventListeners(){
   document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', cell => {
       const x = parseInt(cell.target.dataset.x);
@@ -50,4 +59,4 @@ export function generateHTML(matrix) {
       }
     })
   })
-};
+}
