@@ -116,7 +116,6 @@ describe('Matrix tests', () => {
     matrix.matrix[0][3].insertBomb();
     matrix.matrix[1][3].insertBomb();
     matrix.matrix[1][4].insertBomb();
-    console.log(matrix.matrix);
     expect(matrix.countAdjacentMines(0, 0)).toEqual(1);
     expect(matrix.countAdjacentMines(1, 1)).toEqual(2);
     expect(matrix.countAdjacentMines(2, 2)).toEqual(3);
@@ -218,6 +217,15 @@ describe('Matrix tests', () => {
     expect(adjacentCells[7].x).toEqual(3);
     expect(adjacentCells[7].y).toEqual(3);
     expect(adjacentCells.length).toEqual(8);
+  })
+  it('changeFlagStateOnCell test', () => {
+    const matrix = new Matrix(4, 4, 1);
+    console.log(matrix.matrix[0][1])
+    expect(matrix.matrix[0][1].isFlagged).toEqual(false);
+    matrix.changeFlagStateOnCell(1, 0);
+    expect(matrix.matrix[0][1].isFlagged).toEqual(true);
+    matrix.changeFlagStateOnCell(1, 0);
+    expect(matrix.matrix[0][1].isFlagged).toEqual(false);
   })
 });
 
