@@ -1,6 +1,6 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(10, 10, 5);
+const matrix = new Matrix(10, 10, 10);
 
 
 generateHTML(matrix);
@@ -14,14 +14,18 @@ export function generateHTML(matrix) {
       if (matrix.matrix[i][j].isRevealed) {
         if (matrix.matrix[i][j].isMine) {
           content = '💣';
-        } else if (matrix.matrix[i][j].isFlagged){
-          content = '🚩';
-        }
-        else {
-          content = matrix.matrix[i][j].adjacentMines;
-          if (content === 0) {
-            content = '';
+        } else {
+          if (matrix.matrix[i][j].adjacentMines === 0) {
+            content = ''
+          } else {
+            content = matrix.matrix[i][j].adjacentMines;
           }
+        }
+      } else {
+        if (matrix.matrix[i][j].isFlagged) {
+          content = '🚩';
+        } else {
+          content = '';
         }
       }
       gameHTML += `<div class="cell${matrix.matrix[i][j].isRevealed ? ' revealed' : ''}" data-x="${j}" data-y="${i}">${content}</div>`;
@@ -40,8 +44,10 @@ export function generateHTML(matrix) {
     cell.addEventListener('contextmenu', cell => {
       const x = parseInt(cell.target.dataset.x);
       const y = parseInt(cell.target.dataset.y);
-      matrix.changeFlagStateOnCell(x, y);
-      generateHTML(matrix);
+      if (!matrix.matrix[y][x].isRevealed) {
+        matrix.changeFlagStateOnCell(x, y);
+        generateHTML(matrix);
+      }
     })
   })
 };
