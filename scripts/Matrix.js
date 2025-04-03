@@ -148,8 +148,18 @@ export class Matrix {
 
   changeFlagStateOnCell(x, y) {
     //if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
-      this.matrix[y][x].changeFlagState();
-      
+    this.matrix[y][x].changeFlagState();
+
     //}
+  }
+
+  isSomethingRevealed() {
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+        if(matrix.matrix[i][j].isRevealed){
+          return true;
+        }
+      }
+    }
   }
 }
