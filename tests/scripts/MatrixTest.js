@@ -152,7 +152,7 @@ describe('Matrix tests', () => {
     expect(() => new Matrix(5, 5, 25)).toThrowError("Počet min je větší nebo roven počtu políček.");
     expect(() => new Matrix(5, 5, 28)).toThrowError("Počet min je větší nebo roven počtu políček.");
   })
-  
+
   it('revealCell test', () => {
     const matrix = new Matrix(5, 5, 0);
     matrix.matrix[0][0].insertBomb();
@@ -210,7 +210,7 @@ describe('Matrix tests', () => {
     expect(adjacentCells[3].y).toEqual(1);
     expect(adjacentCells[4].x).toEqual(2);
     expect(adjacentCells[4].y).toEqual(3);
-    
+
     expect(adjacentCells[5].x).toEqual(3);
     expect(adjacentCells[5].y).toEqual(1);
     expect(adjacentCells[6].x).toEqual(3);
@@ -228,6 +228,32 @@ describe('Matrix tests', () => {
     matrix.changeFlagStateOnCell(1, 0);
     expect(matrix.matrix[0][1].isFlagged).toEqual(false);
   })
-  
+  it('isItSafeToRevealAdjacent test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.revealCell(1, 1);
+    expect(matrix.isItSafeToRevealAdjacent(1, 1)).toEqual(false);
+    matrix.changeFlagStateOnCell(0, 0);
+    expect(matrix.isItSafeToRevealAdjacent(1, 1)).toEqual(true);
+  })
+  it('revealAdjacent test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.revealCell(1, 1);
+    matrix.changeFlagStateOnCell(0, 0);
+    matrix.revealAdjacent(1, 1);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(false);
+    for (let i = 0; i < matrix.rows; i++) {
+      for (let j = 0; j < matrix.columns; j++) {
+        if (i !== 0 && j !== 0) {
+          expect(matrix.matrix[j][i].isRevealed).toEqual(true)
+        }
+      }
+
+    }
+  })
+
 });
 
