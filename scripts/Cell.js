@@ -13,7 +13,6 @@ export class Cell {
     this.adjacentMines = 0;
     this.x = x;
     this.y = y;
-    //remake so x and y are not in if statement
   }
 
   insertBomb() {
@@ -22,6 +21,7 @@ export class Cell {
 
   reveal() {
     this.isRevealed = true;
+    this.isFlagged = false;
   }
 
   changeFlagState() {

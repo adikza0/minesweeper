@@ -51,8 +51,8 @@ function addEventListeners() {
         generateHTML(matrix);
       }else{
         if (matrix.matrix[y][x].adjacentMines !== 0) {
-          //TODO: add right+left click function
-
+          matrix.revealAdjacent(x, y);
+          generateHTML(matrix);
         }
       }
     })
