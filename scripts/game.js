@@ -1,10 +1,11 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(10, 10, 0);
-matrix.matrix[0][0].insertBomb();
-matrix.fillAdjacentMines();
+const gameMatrix = new Matrix(10, 10, 0);
+gameMatrix.matrix[0][0].insertBomb();
+gameMatrix.matrix[0][2].insertBomb();
+gameMatrix.fillAdjacentMines();
 
-generateHTML(matrix);
+handleGameStatus(gameMatrix);
 
 
 
@@ -31,16 +32,30 @@ export function generateHTML(matrix) {
           content = '';
         }
       }
-      gameHTML += `<div class="cell${matrix.matrix[i][j].isRevealed ? ' revealed' : ''}" data-x="${j}" data-y="${i}">${content}</div>`;
+      gameHTML += `<div class="cell${matrix.matrix[i][j].isRevealed ? ' revealed' : ''}${matrix.failedCell && i === matrix.failedCell.y && j === matrix.failedCell.x ? ' failed' : ''}" data-x="${j}" data-y="${i}">${content}</div>`;
     }
     gameHTML += '</div>';
   }
   document.querySelector('.js-game-container').innerHTML = gameHTML;
-  addEventListeners();
+  
 };
 
+export function handleGameStatus(matrix) {
+  if (!matrix.gameOver) {
+    generateHTML(matrix);
+    addEventListeners(matrix);
+  } else {
+    matrix.revealMines();
+    generateHTML(matrix);
+    setTimeout(() => {
 
-function addEventListeners() {
+      alert('YOU LOST!')
+    }, 1);
+  }
+}
+
+
+function addEventListeners(matrix) {
   document.addEventListener('contextmenu', event => {
     event.preventDefault();
   })
@@ -61,11 +76,11 @@ function addEventListeners() {
       const y = parseInt(cell.target.dataset.y);
       if (!matrix.matrix[y][x].isRevealed && !isRMBClicked) {
         matrix.revealCell(x, y);
-        generateHTML(matrix);
+        handleGameStatus(matrix)
       } else {
         if (matrix.matrix[y][x].adjacentMines !== 0 && isRMBClicked) {
           matrix.revealAdjacent(x, y);
-          generateHTML(matrix);
+          handleGameStatus(matrix)
         }
       }
     })
@@ -76,7 +91,7 @@ function addEventListeners() {
       const y = parseInt(cell.target.dataset.y);
       if (!matrix.matrix[y][x].isRevealed) {
         matrix.changeFlagStateOnCell(x, y);
-        generateHTML(matrix);
+        handleGameStatus(matrix)
       }
     })
   })

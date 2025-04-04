@@ -4,6 +4,9 @@ export class Matrix {
   columns;
   bombCount;
   matrix;
+  gameOver;
+  failedCell;
+
   constructor(rows, columns, bombCount) {
     if (rows < 1) {
       throw new Error("Matice musí mít alespoň 1 řádek.");
@@ -15,6 +18,7 @@ export class Matrix {
     this.columns = columns;
     this.bombCount = bombCount;
     this.generateMatrix();
+    this.gameOver = false;
 
   }
   generateMatrix() {
@@ -97,11 +101,8 @@ export class Matrix {
     if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
       this.matrix[y][x].reveal();
       if (this.matrix[y][x].isMine) {
-
-
-
-
-        //TODO: Add code for game over
+        this.gameOver = true;
+        this.failedCell = this.matrix[y][x];
       } else {
         if (this.matrix[y][x].adjacentMines === 0) {
           this.revealAdjacentEmptyCells(x, y);
@@ -174,6 +175,15 @@ export class Matrix {
       adjacentUnflaggedUnrevealedCells.forEach(cell => {
         this.revealCell(cell.x, cell.y)
       })
+    }
+  }
+  revealMines() {
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+       if(this.matrix[i][j].isMine){
+        this.matrix[i][j].reveal();
+       } 
+      }      
     }
   }
 

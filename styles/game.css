@@ -2,6 +2,7 @@ body {
   font-family: Arial, sans-serif; 
   text-align: center; 
 }
+
 .game-container { 
   display: inline-block; 
   margin: 20px auto; 
@@ -26,4 +27,7 @@ body {
 .cell.mine { 
   background: red; 
   color: white; 
+}
+.cell.failed {
+  background-color: red;
 }
