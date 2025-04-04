@@ -41,16 +41,29 @@ export function generateHTML(matrix) {
 
 
 function addEventListeners() {
+  document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+  })
+  let isRMBClicked = false;
+  document.addEventListener("mousedown", (event) => {
+    if (event.button === 2) { // 2 is the code for the right mouse button
+      isRMBClicked = true;
+    }
+  });
+  document.addEventListener("mouseup", (event) => {
+    if (event.button === 2) { // 2 is the code for the right mouse button
+      isRMBClicked = false;
+    }
+  });
   document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', cell => {
       const x = parseInt(cell.target.dataset.x);
       const y = parseInt(cell.target.dataset.y);
-      if (!matrix.matrix[y][x].isRevealed) {
+      if (!matrix.matrix[y][x].isRevealed && !isRMBClicked) {
         matrix.revealCell(x, y);
-        console.log('click');
         generateHTML(matrix);
-      }else{
-        if (matrix.matrix[y][x].adjacentMines !== 0) {
+      } else {
+        if (matrix.matrix[y][x].adjacentMines !== 0 && isRMBClicked) {
           matrix.revealAdjacent(x, y);
           generateHTML(matrix);
         }

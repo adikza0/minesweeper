@@ -168,9 +168,7 @@ export class Matrix {
   revealAdjacent(x, y) {
     
     if (this.isItSafeToRevealAdjacent(x, y)){
-      console.log('revealujuj')
       const adjacentUnflaggedUnrevealedCells = this.returnAdjacentCells(x, y).filter(cell => !cell.isFlagged && !cell.isRevealed);
-      console.log(adjacentUnflaggedUnrevealedCells);
       
       //někde tu je problem
       adjacentUnflaggedUnrevealedCells.forEach(cell => {
