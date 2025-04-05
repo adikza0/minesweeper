@@ -55,17 +55,6 @@ export class Matrix {
     }
   }
 
-  returnRemainingBombCount() {
-    let bombCount = 0;
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-        if (this.matrix[i][j].isMine) {
-          bombCount++;
-        }
-      }
-    }
-    return bombCount;
-  }
 
   generateRandomPosition() {
     return [Math.floor(Math.random() * this.columns), Math.floor(Math.random() * this.rows)];
@@ -186,6 +175,8 @@ export class Matrix {
       }      
     }
   }
+
+  returnRemaining
 
   /*isSomethingRevealed() {
     for (let i = 0; i < this.rows; i++) {
