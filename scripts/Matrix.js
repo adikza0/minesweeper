@@ -6,6 +6,7 @@ export class Matrix {
   matrix;
   gameOver;
   failedCell;
+  gameWon;
 
   constructor(rows, columns, bombCount) {
     if (rows < 1) {
@@ -19,6 +20,7 @@ export class Matrix {
     this.bombCount = bombCount;
     this.generateMatrix();
     this.gameOver = false;
+    this.gameWon = false;
 
   }
   generateMatrix() {
@@ -92,6 +94,8 @@ export class Matrix {
       if (this.matrix[y][x].isMine) {
         this.gameOver = true;
         this.failedCell = this.matrix[y][x];
+      } else if (this.returnUnrevealedCellCount() === this.bombCount) {
+        this.gameWon = true;
       } else {
         if (this.matrix[y][x].adjacentMines === 0) {
           this.revealAdjacentEmptyCells(x, y);
@@ -176,7 +180,17 @@ export class Matrix {
     }
   }
 
-  returnRemaining
+  returnUnrevealedCellCount() {
+    let unrevealedCellCount = 0;
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+        if(!this.matrix[i][j].isRevealed){
+          unrevealedCellCount++;
+        }
+      }      
+    }
+    return unrevealedCellCount;
+  }
 
   /*isSomethingRevealed() {
     for (let i = 0; i < this.rows; i++) {
@@ -190,3 +204,4 @@ export class Matrix {
 
 
 }
+//TODO: add a handling that first reveal always must be to 0

@@ -246,3 +246,4 @@ describe('Matrix tests', () => {
 
 });
 
+//TODO: returnUnrevealedCellCount, gameWon, 

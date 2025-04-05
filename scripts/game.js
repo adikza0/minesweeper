@@ -1,9 +1,8 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(4, 4, 0);
-    matrix.matrix[0][0].insertBomb();
-    matrix.fillAdjacentMines();
+const matrix = new Matrix(4, 4, 1);
     handleGameStatus(matrix);
+    
 
 
 
@@ -35,22 +34,29 @@ export function generateHTML(matrix) {
     gameHTML += '</div>';
   }
   document.querySelector('.js-game-container').innerHTML = gameHTML;
-  
 };
 
 export function handleGameStatus(matrix) {
-  if (!matrix.gameOver) {
-    generateHTML(matrix);
-    addEventListeners(matrix);
-  } else {
+  if (matrix.gameOver) {
     matrix.revealMines();
     generateHTML(matrix);
-    setTimeout(() => {
-
-      alert('YOU LOST!')
-    }, 1);
+    showAlert('YOU LOST!');
+  } else if (matrix.gameWon) {
+    generateHTML(matrix);
+    showAlert('YOU WON!');
+  } else{
+    generateHTML(matrix);
+    addEventListeners(matrix);
   }
 }
+
+function showAlert(message) {
+  setTimeout(() => {
+    alert(message);
+  }, 1);
+}
+  
+
 
 
 function addEventListeners(matrix) {
