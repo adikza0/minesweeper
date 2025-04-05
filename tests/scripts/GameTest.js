@@ -44,6 +44,63 @@ describe('game test suite', () => {
     expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0">🚩</div><div class="cell revealed" data-x="1" data-y="0">1</div><div class="cell revealed" data-x="2" data-y="0"></div><div class="cell revealed" data-x="3" data-y="0"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="1">1</div><div class="cell revealed" data-x="1" data-y="1">1</div><div class="cell revealed" data-x="2" data-y="1"></div><div class="cell revealed" data-x="3" data-y="1"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="2"></div><div class="cell revealed" data-x="1" data-y="2"></div><div class="cell revealed" data-x="2" data-y="2"></div><div class="cell revealed" data-x="3" data-y="2"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="3"></div><div class="cell revealed" data-x="1" data-y="3"></div><div class="cell revealed" data-x="2" data-y="3"></div><div class="cell revealed" data-x="3" data-y="3"></div></div>');
   });
 
+  it('gameOver tests', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    expect(matrix.gameOver).toEqual(false);
+    matrix.revealCell(0,0);
+    expect(matrix.gameOver).toEqual(true);
+  })
+
+  it('failedCell tests', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    expect(matrix.failedCell).toEqual(undefined);
+    matrix.revealCell(0,0);
+    expect(matrix.failedCell.x).toEqual(0);
+    expect(matrix.failedCell.y).toEqual(0);
+  })
+
+  it('revealMines tests', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][1].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    matrix.matrix[0][3].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.revealMines();
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if(i===0){
+          expect(matrix.matrix[i][j].isRevealed).toEqual(true);
+        } else{
+          expect(matrix.matrix[i][j].isRevealed).toEqual(false);
+        }
+      }
+    }
+  })
+
+  it('handleGameStatus tests', (done) => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    spyOn(window, 'alert').and.stub();
+    spyOn(matrix, 'revealMines');
+    handleGameStatus(matrix);
+    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>')
+    expect(window.alert).toHaveBeenCalledTimes(0);
+    expect(matrix.revealMines).toHaveBeenCalledTimes(0);
+    matrix.revealCell(0, 0);
+    handleGameStatus(matrix);
+    expect(document.querySelector('.js-game-container').innerHTML).toEqual('<div class="row"><div class="cell revealed failed" data-x="0" data-y="0">💣</div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div></div>');
+  setTimeout(() => {
+    expect(window.alert).toHaveBeenCalledTimes(1);
+    expect(matrix.revealMines).toHaveBeenCalledTimes(1);
+    done(); 
+  }, 10);
+  })
+
 }
 )
-//TODO: add handleGameStatus tests, gameOver and failedCell tests, revealMines tests

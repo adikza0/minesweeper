@@ -1,11 +1,9 @@
 import { Matrix } from './Matrix.js';
 
-const gameMatrix = new Matrix(10, 10, 0);
-gameMatrix.matrix[0][0].insertBomb();
-gameMatrix.matrix[0][2].insertBomb();
-gameMatrix.fillAdjacentMines();
-
-handleGameStatus(gameMatrix);
+const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.fillAdjacentMines();
+    handleGameStatus(matrix);
 
 
 
