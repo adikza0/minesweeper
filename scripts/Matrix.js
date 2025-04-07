@@ -129,7 +129,7 @@ export class Matrix {
         continue;
       }
       searchedCells.add(cell);
-      cell.reveal();
+      this.revealCell(cell.x, cell.y);
 
       //Pokud má buňka adjacentMines === 0, přidáme do fronty všechny její neodhalené sousedy.
       if (cell.adjacentMines === 0) {

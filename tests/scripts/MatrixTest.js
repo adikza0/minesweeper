@@ -247,12 +247,23 @@ describe('Matrix tests', () => {
     matrix.bombCount = 1;
     matrix.matrix[0][0].insertBomb(0, 0);
     matrix.fillAdjacentMines();
-    console.log(matrix);
     expect(matrix.returnUnrevealedCellCount()).toEqual(16);
     matrix.revealCell(1, 0)
     expect(matrix.returnUnrevealedCellCount()).toEqual(15);
     matrix.revealCell(2, 0)
     expect(matrix.returnUnrevealedCellCount()).toEqual(1);
+  })
+
+  it('gameWon test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.bombCount = 1;
+    matrix.matrix[0][0].insertBomb(0, 0);
+    matrix.fillAdjacentMines();
+    expect(matrix.gameWon).toEqual(false);
+    matrix.revealCell(1, 0);
+    expect(matrix.gameWon).toEqual(false);
+    matrix.revealCell(2, 0);
+    expect(matrix.gameWon).toEqual(true);
   })
 });
 
