@@ -7,6 +7,7 @@ export class Matrix {
   gameOver;
   failedCell;
   gameWon;
+  firstClick;
 
   constructor(rows, columns, bombCount) {
     if (rows < 4) {
@@ -21,6 +22,7 @@ export class Matrix {
     this.generateMatrix();
     this.gameOver = false;
     this.gameWon = false;
+    this.firstClick = true;
 
   }
   generateMatrix() {
@@ -89,6 +91,15 @@ export class Matrix {
     }
   }
   revealCell(x, y) {
+  if (this.firstClick) {
+    let cell = this.matrix[y][x];
+    if (cell.isMine || cell.adjacentMines > 0) {
+      this.generateMatrix();
+      return this.revealCell(x, y); 
+    }
+    this.firstClick = false;
+  }
+
     if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
       this.matrix[y][x].reveal();
       if (this.matrix[y][x].isMine) {

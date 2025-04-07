@@ -1,6 +1,6 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(4, 4, 1);
+const matrix = new Matrix(10, 10, 10);
     handleGameStatus(matrix);
     
 

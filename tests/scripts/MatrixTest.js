@@ -267,3 +267,6 @@ describe('Matrix tests', () => {
     expect(matrix.gameWon).toEqual(true);
   })
 });
+
+
+//TODO: add firstClick test;
