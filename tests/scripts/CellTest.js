@@ -30,6 +30,3 @@ describe('Cell tests', () => {
     expect(cell.isFlagged).toEqual(false);
   })
 })
-
-
-//TODO: Remake that new Cell always needs x and y

@@ -210,7 +210,6 @@ describe('Matrix tests', () => {
   })
   it('changeFlagStateOnCell test', () => {
     const matrix = new Matrix(4, 4, 1);
-    console.log(matrix.matrix[0][1])
     expect(matrix.matrix[0][1].isFlagged).toEqual(false);
     matrix.changeFlagStateOnCell(1, 0);
     expect(matrix.matrix[0][1].isFlagged).toEqual(true);
@@ -243,7 +242,20 @@ describe('Matrix tests', () => {
 
     }
   })
-
+  it('returnUnrevealedCellCount test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.bombCount = 1;
+    matrix.matrix[0][0].insertBomb(0, 0);
+    matrix.fillAdjacentMines();
+    console.log(matrix);
+    expect(matrix.returnUnrevealedCellCount()).toEqual(16);
+    matrix.revealCell(1, 0)
+    expect(matrix.returnUnrevealedCellCount()).toEqual(15);
+    matrix.revealCell(2, 0)
+    expect(matrix.returnUnrevealedCellCount()).toEqual(1);
+  })
 });
 
-//TODO: returnUnrevealedCellCount, gameWon, 
+
+
+//TODO: gameWon, 
