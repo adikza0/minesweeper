@@ -9,11 +9,11 @@ export class Matrix {
   gameWon;
 
   constructor(rows, columns, bombCount) {
-    if (rows < 1) {
-      throw new Error("Matice musí mít alespoň 1 řádek.");
+    if (rows < 4) {
+      throw new Error("Matice musí mít alespoň 4 řádky.");
     }
-    if (columns < 1) {
-      throw new Error("Matice musí mít alespoň 1 sloupec.");
+    if (columns < 4) {
+      throw new Error("Matice musí mít alespoň 4 sloupce.");
     }
     this.rows = rows;
     this.columns = columns;
@@ -42,8 +42,8 @@ export class Matrix {
   }
 
   generateBombs() {
-    if (this.bombCount >= this.rows * this.columns) {
-      throw new Error("Počet min je větší nebo roven počtu políček.");
+    if (this.bombCount >= (this.rows * this.columns) / 2) {
+      throw new Error("Počet může nesmí být větší než celkový počet všech políček.");
     }
     let x;
     let y;

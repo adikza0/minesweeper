@@ -11,8 +11,8 @@ describe('Matrix tests', () => {
   })
 
   it('constructor test with invalid matrix size', () => {
-    expect(() => new Matrix(0, 5, 0)).toThrowError("Matice musí mít alespoň 1 řádek.");
-    expect(() => new Matrix(5, 0, 0)).toThrowError("Matice musí mít alespoň 1 sloupec.");
+    expect(() => new Matrix(0, 5, 0)).toThrowError("Matice musí mít alespoň 4 řádky.");
+    expect(() => new Matrix(5, 0, 0)).toThrowError("Matice musí mít alespoň 4 sloupce.");
   })
 
   it('createEmptyMatrix test', () => {
@@ -31,14 +31,13 @@ describe('Matrix tests', () => {
       }
     }
 
-    emptyMatrix = new Matrix(1, 5, 0);
+    emptyMatrix = new Matrix(4, 5, 0);
     emptyMatrix.createEmptyMatrix();
-    expect(emptyMatrix.matrix.length).toEqual(1);
+    expect(emptyMatrix.matrix.length).toEqual(4);
     expect(emptyMatrix.matrix[0].length).toEqual(5);
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 5; j++) {
         expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true);
-        expect(emptyMatrix.matrix[i][j] instanceof Cell).toEqual(true)
         expect(emptyMatrix.matrix[i][j].adjacentMines).toEqual(0);
         expect(emptyMatrix.matrix[i][j].isMine).toEqual(false);
         expect(emptyMatrix.matrix[i][j].isFlagged).toEqual(false);
@@ -138,8 +137,10 @@ describe('Matrix tests', () => {
   })
 
   it('generate matrix with more mines than cells', () => {
-    expect(() => new Matrix(5, 5, 25)).toThrowError("Počet min je větší nebo roven počtu políček.");
-    expect(() => new Matrix(5, 5, 28)).toThrowError("Počet min je větší nebo roven počtu políček.");
+    expect(() => new Matrix(5, 5, 25)).toThrowError("Počet může nesmí být větší než celkový počet všech políček.");
+    expect(() => new Matrix(5, 5, 28)).toThrowError("Počet může nesmí být větší než celkový počet všech políček.");
+    expect(() => new Matrix(4, 4, 9)).toThrowError("Počet může nesmí být větší než celkový počet všech políček.");
+    expect(() => new Matrix(4, 4, 8)).not.toThrow("Počet může nesmí být větší než celkový počet všech políček.");
   })
 
   it('revealCell test', () => {
@@ -266,7 +267,3 @@ describe('Matrix tests', () => {
     expect(matrix.gameWon).toEqual(true);
   })
 });
-
-
-
-//TODO: gameWon, 
