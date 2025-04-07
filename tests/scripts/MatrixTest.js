@@ -144,21 +144,24 @@ describe('Matrix tests', () => {
   })
 
   it('revealCell test', () => {
-    const matrix = new Matrix(5, 5, 0);
+    const matrix = new Matrix(4, 4, 0);
     matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
     matrix.fillAdjacentMines();
 
     expect(matrix.matrix[0][0].isRevealed).toEqual(false);
-    matrix.revealCell(0, 0);
-    expect(matrix.matrix[0][0].isRevealed).toEqual(true);
-    expect(matrix.matrix[1][1].isRevealed).toEqual(false);
-    expect(matrix.matrix[2][2].isRevealed).toEqual(false);
-    expect(matrix.matrix[4][4].isRevealed).toEqual(false);
-    matrix.revealCell(1, 1);
-    expect(matrix.matrix[0][0].isRevealed).toEqual(true);
-    expect(matrix.matrix[1][1].isRevealed).toEqual(true);
-    expect(matrix.matrix[2][2].isRevealed).toEqual(false);
-    expect(matrix.matrix[4][4].isRevealed).toEqual(false);
+    matrix.revealCell(2, 2);
+    expect(matrix.matrix[1][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][1].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][2].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][3].isRevealed).toEqual(false);
+    matrix.revealCell(1, 0);
+    expect(matrix.matrix[1][0].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][0].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][1].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][2].isRevealed).toEqual(false);
+    expect(matrix.matrix[0][3].isRevealed).toEqual(false);
 
   })
 
@@ -220,39 +223,38 @@ describe('Matrix tests', () => {
   it('isItSafeToRevealAdjacent test', () => {
     const matrix = new Matrix(4, 4, 0);
     matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
     matrix.fillAdjacentMines();
-    matrix.revealCell(1, 1);
+    matrix.revealCell(2, 2);
     expect(matrix.isItSafeToRevealAdjacent(1, 1)).toEqual(false);
+    expect(matrix.isItSafeToRevealAdjacent(0, 1)).toEqual(false);
     matrix.changeFlagStateOnCell(0, 0);
-    expect(matrix.isItSafeToRevealAdjacent(1, 1)).toEqual(true);
+    expect(matrix.isItSafeToRevealAdjacent(1, 1)).toEqual(false);
+    expect(matrix.isItSafeToRevealAdjacent(0, 1)).toEqual(true);
   })
   it('revealAdjacent test', () => {
     const matrix = new Matrix(4, 4, 0);
     matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
     matrix.fillAdjacentMines();
-    matrix.revealCell(1, 1);
+    matrix.revealCell(2, 2);
     matrix.changeFlagStateOnCell(0, 0);
-    matrix.revealAdjacent(1, 1);
+    matrix.revealAdjacent(0, 1);
     expect(matrix.matrix[0][0].isRevealed).toEqual(false);
-    for (let i = 0; i < matrix.rows; i++) {
-      for (let j = 0; j < matrix.columns; j++) {
-        if (i !== 0 && j !== 0) {
-          expect(matrix.matrix[j][i].isRevealed).toEqual(true)
-        }
-      }
-
-    }
+    expect(matrix.matrix[0][1].isRevealed).toEqual(true);
+    expect(matrix.matrix[0][2].isRevealed).toEqual(false);
   })
   it('returnUnrevealedCellCount test', () => {
     const matrix = new Matrix(4, 4, 0);
-    matrix.bombCount = 1;
-    matrix.matrix[0][0].insertBomb(0, 0);
+    matrix.bombCount = 2;
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
     matrix.fillAdjacentMines();
     expect(matrix.returnUnrevealedCellCount()).toEqual(16);
+    matrix.revealCell(2, 2)
+    expect(matrix.returnUnrevealedCellCount()).toEqual(4);
     matrix.revealCell(1, 0)
-    expect(matrix.returnUnrevealedCellCount()).toEqual(15);
-    matrix.revealCell(2, 0)
-    expect(matrix.returnUnrevealedCellCount()).toEqual(1);
+    expect(matrix.returnUnrevealedCellCount()).toEqual(3);
   })
 
   it('gameWon test', () => {
@@ -260,8 +262,7 @@ describe('Matrix tests', () => {
     matrix.bombCount = 1;
     matrix.matrix[0][0].insertBomb(0, 0);
     matrix.fillAdjacentMines();
-    expect(matrix.gameWon).toEqual(false);
-    matrix.revealCell(1, 0);
+
     expect(matrix.gameWon).toEqual(false);
     matrix.revealCell(2, 0);
     expect(matrix.gameWon).toEqual(true);

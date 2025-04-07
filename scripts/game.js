@@ -1,8 +1,11 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(10, 10, 10);
-    handleGameStatus(matrix);
-    
+const matrix = new Matrix(5, 5, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    matrix.fillAdjacentMines();
+handleGameStatus(matrix)
+
 
 
 
@@ -44,7 +47,7 @@ export function handleGameStatus(matrix) {
   } else if (matrix.gameWon) {
     generateHTML(matrix);
     showAlert('YOU WON!');
-  } else{
+  } else {
     generateHTML(matrix);
     addEventListeners(matrix);
   }
@@ -55,7 +58,7 @@ function showAlert(message) {
     alert(message);
   }, 1);
 }
-  
+
 
 
 

@@ -167,6 +167,8 @@ export class Matrix {
         adjacentFlagCount++;
       }
     })
+    console.log(this.matrix[x][y])
+    console.log(adjacentBombCount, adjacentFlagCount)
     return adjacentBombCount === adjacentFlagCount
   }
 
@@ -175,7 +177,6 @@ export class Matrix {
     if (this.isItSafeToRevealAdjacent(x, y)){
       const adjacentUnflaggedUnrevealedCells = this.returnAdjacentCells(x, y).filter(cell => !cell.isFlagged && !cell.isRevealed);
       
-      //někde tu je problem
       adjacentUnflaggedUnrevealedCells.forEach(cell => {
         this.revealCell(cell.x, cell.y)
       })
