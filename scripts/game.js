@@ -118,3 +118,6 @@ function addEventListeners(matrix) {
     })
   })
 }
+
+
+//TODO: remaining flags/bombs, countdown, launcher, maybe hover highlight?
