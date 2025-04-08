@@ -1,6 +1,24 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(10, 10, 30);
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+let columns = urlParams.get('columns');
+let rows = urlParams.get('rows');
+let mines = urlParams.get('mines');
+
+
+if (columns < 5 || columns === null) {
+  columns = 10;
+}
+if (rows < 5 || rows === null) {
+  rows = 10;
+}
+if(mines === null ){
+  mines = 8;
+}
+
+const matrix = new Matrix(rows, columns, mines);
 handleGameStatus(matrix)
 
 
