@@ -267,7 +267,17 @@ describe('Matrix tests', () => {
     matrix.revealCell(2, 0);
     expect(matrix.gameWon).toEqual(true);
   })
+
+  it('first reveal on 0 test', () => {
+    for (let i = 0; i < 50; i++) {
+      const matrix = new Matrix(5, 5, 10);
+      matrix.revealCell(1, 1);
+      expect(matrix.matrix[0][0].isRevealed).toEqual(true);
+      expect(matrix.matrix[1][1].isRevealed).toEqual(true);
+      expect(matrix.matrix[2][2].isRevealed).toEqual(true);
+      expect(matrix.matrix[1][1].isMine).toEqual(false);
+      expect(matrix.matrix[1][1].adjacentMines).toEqual(0);
+
+    }
+  })
 });
-
-
-//TODO: add firstClick test;

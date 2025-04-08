@@ -1,9 +1,6 @@
 import { Matrix } from './Matrix.js';
 
-const matrix = new Matrix(5, 5, 0);
-    matrix.matrix[0][0].insertBomb();
-    matrix.matrix[0][2].insertBomb();
-    matrix.fillAdjacentMines();
+const matrix = new Matrix(10, 10, 30);
 handleGameStatus(matrix)
 
 
