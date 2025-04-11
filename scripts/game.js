@@ -81,26 +81,16 @@ function addEventListeners(matrix) {
   document.addEventListener('contextmenu', event => {
     event.preventDefault();
   })
-  let isRMBClicked = false;
-  document.addEventListener("mousedown", (event) => {
-    if (event.button === 2) { // 2 is the code for the right mouse button
-      isRMBClicked = true;
-    }
-  });
-  document.addEventListener("mouseup", (event) => {
-    if (event.button === 2) { // 2 is the code for the right mouse button
-      isRMBClicked = false;
-    }
-  });
   document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', cell => {
       const x = parseInt(cell.target.dataset.x);
       const y = parseInt(cell.target.dataset.y);
-      if (!matrix.matrix[y][x].isRevealed && !isRMBClicked) {
+      const isRMBPressed = cell.buttons === 2 || cell.buttons === 3; // Right mouse button pressed
+      if (!matrix.matrix[y][x].isRevealed && !isRMBPressed) {
         matrix.revealCell(x, y);
         handleGameStatus(matrix)
       } else {
-        if (matrix.matrix[y][x].adjacentMines !== 0 && isRMBClicked) {
+        if (matrix.matrix[y][x].adjacentMines !== 0 && isRMBPressed) {
           matrix.revealAdjacent(x, y);
           handleGameStatus(matrix)
         }
@@ -120,4 +110,4 @@ function addEventListeners(matrix) {
 }
 
 
-//TODO: remaining flags/bombs, countdown, launcher, maybe hover highlight?
+//TODO: remaining flags/bombs, countdown, launcher, maybe hover highlight?, reset
