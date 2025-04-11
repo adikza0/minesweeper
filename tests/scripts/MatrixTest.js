@@ -213,8 +213,15 @@ describe('Matrix tests', () => {
     expect(adjacentCells.length).toEqual(8);
   })
   it('changeFlagStateOnCell test', () => {
-    const matrix = new Matrix(4, 4, 1);
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    
+    //const matrix = new Matrix(4, 4, 1);
     expect(matrix.matrix[0][1].isFlagged).toEqual(false);
+    matrix.changeFlagStateOnCell(1, 0);
+    expect(matrix.matrix[0][1].isFlagged).toEqual(false);
+    matrix.revealCell(2, 2);
     matrix.changeFlagStateOnCell(1, 0);
     expect(matrix.matrix[0][1].isFlagged).toEqual(true);
     matrix.changeFlagStateOnCell(1, 0);

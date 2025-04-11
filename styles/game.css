@@ -31,3 +31,42 @@ body {
 .cell.failed {
   background-color: red;
 }
+
+.game-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #eee;
+  color: #333;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  margin: 20px auto;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.game-header__score,
+.game-header__timer {
+  font-size: 1.5rem;
+  min-width: 40px;
+}
+
+.game-header__reset {
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  padding: 6px 14px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.game-header__reset:hover {
+  background-color: #ccc;
+}
+
+.game-header__reset:active {
+  transform: scale(0.95);
+}

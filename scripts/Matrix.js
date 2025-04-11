@@ -91,14 +91,14 @@ export class Matrix {
     }
   }
   revealCell(x, y) {
-  if (this.firstClick) {
-    let cell = this.matrix[y][x];
-    if (cell.isMine || cell.adjacentMines > 0) {
-      this.generateMatrix();
-      return this.revealCell(x, y); 
+    if (this.firstClick) {
+      let cell = this.matrix[y][x];
+      if (cell.isMine || cell.adjacentMines > 0) {
+        this.generateMatrix();
+        return this.revealCell(x, y);
+      }
+      this.firstClick = false;
     }
-    this.firstClick = false;
-  }
 
     if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
       this.matrix[y][x].reveal();
@@ -155,54 +155,56 @@ export class Matrix {
   }
 
   changeFlagStateOnCell(x, y) {
+    if (!this.firstClick) { 
     this.matrix[y][x].changeFlagState();
   }
+}
 
-  isItSafeToRevealAdjacent(x, y) {
-    const adjacentCells = this.returnAdjacentCells(x, y);
-    const adjacentBombCount = this.matrix[y][x].adjacentMines;
-    let adjacentFlagCount = 0;
-    adjacentCells.forEach(cell => {
-      if(cell.isFlagged) {
-        adjacentFlagCount++;
-      }
+isItSafeToRevealAdjacent(x, y) {
+  const adjacentCells = this.returnAdjacentCells(x, y);
+  const adjacentBombCount = this.matrix[y][x].adjacentMines;
+  let adjacentFlagCount = 0;
+  adjacentCells.forEach(cell => {
+    if (cell.isFlagged) {
+      adjacentFlagCount++;
+    }
+  })
+  console.log(this.matrix[x][y])
+  console.log(adjacentBombCount, adjacentFlagCount)
+  return adjacentBombCount === adjacentFlagCount
+}
+
+revealAdjacent(x, y) {
+
+  if (this.isItSafeToRevealAdjacent(x, y)) {
+    const adjacentUnflaggedUnrevealedCells = this.returnAdjacentCells(x, y).filter(cell => !cell.isFlagged && !cell.isRevealed);
+
+    adjacentUnflaggedUnrevealedCells.forEach(cell => {
+      this.revealCell(cell.x, cell.y)
     })
-    console.log(this.matrix[x][y])
-    console.log(adjacentBombCount, adjacentFlagCount)
-    return adjacentBombCount === adjacentFlagCount
   }
-
-  revealAdjacent(x, y) {
-    
-    if (this.isItSafeToRevealAdjacent(x, y)){
-      const adjacentUnflaggedUnrevealedCells = this.returnAdjacentCells(x, y).filter(cell => !cell.isFlagged && !cell.isRevealed);
-      
-      adjacentUnflaggedUnrevealedCells.forEach(cell => {
-        this.revealCell(cell.x, cell.y)
-      })
-    }
-  }
-  revealMines() {
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-       if(this.matrix[i][j].isMine){
+}
+revealMines() {
+  for (let i = 0; i < this.rows; i++) {
+    for (let j = 0; j < this.columns; j++) {
+      if (this.matrix[i][j].isMine) {
         this.matrix[i][j].reveal();
-       } 
-      }      
+      }
     }
   }
+}
 
-  returnUnrevealedCellCount() {
-    let unrevealedCellCount = 0;
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-        if(!this.matrix[i][j].isRevealed){
-          unrevealedCellCount++;
-        }
-      }      
+returnUnrevealedCellCount() {
+  let unrevealedCellCount = 0;
+  for (let i = 0; i < this.rows; i++) {
+    for (let j = 0; j < this.columns; j++) {
+      if (!this.matrix[i][j].isRevealed) {
+        unrevealedCellCount++;
+      }
     }
-    return unrevealedCellCount;
   }
+  return unrevealedCellCount;
+}
 
   /*isSomethingRevealed() {
     for (let i = 0; i < this.rows; i++) {
