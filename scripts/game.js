@@ -18,21 +18,19 @@ if(mines === null ){
   mines = 8;
 }
 
-const matrix = new Matrix(4, 4, 0);
-    matrix.matrix[0][0].insertBomb();
-    matrix.matrix[0][2].insertBomb();
-    matrix.fillAdjacentMines();
-    matrix.revealCell(2, 2);
-    matrix.changeFlagStateOnCell(0, 0);
-    matrix.changeFlagStateOnCell(2, 0);
+const matrix = new Matrix(10,10,10);
+
     handleGameStatus(matrix)
 
 
-export function updateBar(matrix) {
+export function updateRemainingFlags(matrix) {
+  const remainingFlags = matrix.bombCount - matrix.getFlaggedCellsCount();
+  document.querySelector('.js-score').innerHTML = `🚩${remainingFlags}`;
 
 }
 
 export function generateHTML(matrix) {
+  
   let gameHTML = '';
   for (let i = 0; i < matrix.rows; i++) {
     gameHTML += '<div class="row">';
@@ -60,6 +58,9 @@ export function generateHTML(matrix) {
     gameHTML += '</div>';
   }
   document.querySelector('.js-game-container').innerHTML = gameHTML;
+  if(!matrix.gameOver){
+    updateRemainingFlags(matrix);
+  }
 };
 
 export function handleGameStatus(matrix) {
@@ -118,4 +119,4 @@ function addEventListeners(matrix) {
 }
 
 
-//TODO: remaining flags/bombs, countdown, launcher, maybe hover highlight?, reset, better win and lose screen
+//TODO: remaining flags/bombs HTML tests and getRemaningCellsCount tests, countdown, launcher, maybe hover highlight?, reset, better win and lose screen

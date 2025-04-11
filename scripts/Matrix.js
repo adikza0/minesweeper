@@ -206,15 +206,17 @@ returnUnrevealedCellCount() {
   return unrevealedCellCount;
 }
 
-  /*isSomethingRevealed() {
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-        if(matrix.matrix[i][j].isRevealed){
-          return true;
-        }
+getFlaggedCellsCount() {
+  let flaggedCellsCount = 0;
+  for (let i = 0; i < this.rows; i++) {
+    for (let j = 0; j < this.columns; j++) {
+      if (this.matrix[i][j].isFlagged && !this.matrix[i][j].isRevealed) {
+        flaggedCellsCount++;
       }
     }
-  }*/
+  }
+  return flaggedCellsCount;
+}
 
 
 }
