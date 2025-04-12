@@ -287,4 +287,22 @@ describe('Matrix tests', () => {
 
     }
   })
+  it('getFlaggedCellsCount test', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.bombCount = 2;
+    expect(matrix.getFlaggedCellsCount()).toEqual(0);
+    matrix.revealCell(2, 2);
+    expect(matrix.getFlaggedCellsCount()).toEqual(0);
+    matrix.changeFlagStateOnCell(1, 0);
+    console.log(matrix.firstClick);
+    console.log(matrix.matrix)
+    expect(matrix.getFlaggedCellsCount()).toEqual(1);
+    matrix.changeFlagStateOnCell(0, 0);
+    expect(matrix.getFlaggedCellsCount()).toEqual(2);
+    matrix.changeFlagStateOnCell(1, 0);
+    expect(matrix.getFlaggedCellsCount()).toEqual(1);
+  })
 });

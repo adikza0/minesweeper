@@ -169,8 +169,6 @@ isItSafeToRevealAdjacent(x, y) {
       adjacentFlagCount++;
     }
   })
-  console.log(this.matrix[x][y])
-  console.log(adjacentBombCount, adjacentFlagCount)
   return adjacentBombCount === adjacentFlagCount
 }
 
@@ -220,4 +218,3 @@ getFlaggedCellsCount() {
 
 
 }
-//TODO: add a handling that first reveal always must be to 0

@@ -4,6 +4,7 @@ import { Matrix } from '../../scripts/Matrix.js';
 describe('game test suite', () => {
   afterAll(() => {
     document.querySelector('.js-game-container').innerHTML = '';
+    document.querySelector('.js-score').innerHTML = '';
   })
 
   it('10x5 unrevealed matrix HTML check', () => {
@@ -101,6 +102,32 @@ describe('game test suite', () => {
       done();
     }, 10);
   })
-
+  it('updateRemainingFlags html tests', () => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.bombCount = 2;
+    matrix.changeFlagStateOnCell(0, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩2');
+    matrix.revealCell(2, 2);
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩2');
+    matrix.changeFlagStateOnCell(1, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩1');
+    matrix.changeFlagStateOnCell(1, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩2');
+    matrix.changeFlagStateOnCell(1, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩1');
+    matrix.changeFlagStateOnCell(2, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩0');
+    matrix.changeFlagStateOnCell(0, 0);
+    handleGameStatus(matrix)
+    expect(document.querySelector('.js-score').innerHTML).toEqual('🚩-1');
+  })
 }
 )

@@ -18,7 +18,14 @@ if(mines === null ){
   mines = 8;
 }
 
-const matrix = new Matrix(10,10,10);
+const matrix = new Matrix(4, 4, 0);
+matrix.matrix[0][0].insertBomb();
+matrix.matrix[0][2].insertBomb();
+matrix.fillAdjacentMines();
+matrix.bombCount = 2;
+matrix.changeFlagStateOnCell(0, 0);
+handleGameStatus(matrix)
+matrix.revealCell(2, 2);
 
     handleGameStatus(matrix)
 
@@ -119,4 +126,4 @@ function addEventListeners(matrix) {
 }
 
 
-//TODO: remaining flags/bombs HTML tests and getRemaningCellsCount tests, countdown, launcher, maybe hover highlight?, reset, better win and lose screen
+//TODO: countdown, launcher, maybe hover highlight?, reset, better win and lose screen
