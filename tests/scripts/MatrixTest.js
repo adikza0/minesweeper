@@ -297,8 +297,6 @@ describe('Matrix tests', () => {
     matrix.revealCell(2, 2);
     expect(matrix.getFlaggedCellsCount()).toEqual(0);
     matrix.changeFlagStateOnCell(1, 0);
-    console.log(matrix.firstClick);
-    console.log(matrix.matrix)
     expect(matrix.getFlaggedCellsCount()).toEqual(1);
     matrix.changeFlagStateOnCell(0, 0);
     expect(matrix.getFlaggedCellsCount()).toEqual(2);

@@ -8,6 +8,8 @@ export class Matrix {
   failedCell;
   gameWon;
   firstClick;
+  timeCount = 0;
+  intervalId;
 
   constructor(rows, columns, bombCount) {
     if (rows < 4) {
@@ -23,6 +25,7 @@ export class Matrix {
     this.gameOver = false;
     this.gameWon = false;
     this.firstClick = true;
+    this.timeCount = 0;
 
   }
   generateMatrix() {
@@ -98,6 +101,12 @@ export class Matrix {
         return this.revealCell(x, y);
       }
       this.firstClick = false;
+
+      //starting a timer
+      this.intervalId = setInterval(() => {
+        this.timeCount++;
+        document.querySelector('.js-timer').innerHTML = `⏲️${this.timeCount}`;
+      }, 1000);      
     }
 
     if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
@@ -105,14 +114,20 @@ export class Matrix {
       if (this.matrix[y][x].isMine) {
         this.gameOver = true;
         this.failedCell = this.matrix[y][x];
+        this.stopTimer();
       } else if (this.returnUnrevealedCellCount() === this.bombCount) {
         this.gameWon = true;
+        this.stopTimer();
       } else {
         if (this.matrix[y][x].adjacentMines === 0) {
           this.revealAdjacentEmptyCells(x, y);
         }
       }
     }
+  }
+
+  stopTimer() {
+    clearInterval(this.intervalId);
   }
 
   returnAdjacentCells(x, y) {
