@@ -3,12 +3,19 @@ import { Cell } from '../../scripts/Cell.js';
 import { generateHTML } from '../../scripts/game.js';
 
 describe('Matrix tests', () => {
+  afterAll(() => {
+    document.querySelector('.js-score').innerHTML = '';
+    document.querySelector('.js-timer').innerHTML = '';
+  })
+
   it('constructor test', () => {
     let matrix = new Matrix(5, 5, 0);
     expect(matrix.rows).toEqual(5);
     expect(matrix.columns).toEqual(5);
     expect(matrix instanceof Matrix).toEqual(true);
+
   })
+  
 
   it('constructor test with invalid matrix size', () => {
     expect(() => new Matrix(0, 5, 0)).toThrowError("Matice musí mít alespoň 4 řádky.");
@@ -44,6 +51,7 @@ describe('Matrix tests', () => {
         expect(emptyMatrix.matrix[i][j].isRevealed).toEqual(false);
       }
     }
+    emptyMatrix.stopTimer();
   })
 
   it('generateRandomPosition test', () => {
@@ -55,6 +63,7 @@ describe('Matrix tests', () => {
       expect(position[1]).toBeGreaterThanOrEqual(0);
       expect(position[1]).toBeLessThan(5);
     }
+    matrix.stopTimer();
   })
 
   it('generateBombs test with square matrix', () => {
@@ -67,6 +76,7 @@ describe('Matrix tests', () => {
         }
       }
     }
+    matrix.stopTimer();
     expect(bombCount).toEqual(5);
   })
 
@@ -80,7 +90,9 @@ describe('Matrix tests', () => {
         }
       }
     }
+    matrix.stopTimer();
     expect(bombCount).toEqual(10);
+    
   })
 
 
@@ -165,7 +177,7 @@ describe('Matrix tests', () => {
 
   })
 
-  it('revealAdjacentCells test', () => {
+ it('revealAdjacentCells test', () => {
     const matrix = new Matrix(4, 4, 0);
     matrix.matrix[0][0].insertBomb();
     matrix.matrix[0][1].insertBomb();
@@ -216,7 +228,7 @@ describe('Matrix tests', () => {
     const matrix = new Matrix(4, 4, 0);
     matrix.matrix[0][0].insertBomb();
     matrix.matrix[0][2].insertBomb();
-    
+
     //const matrix = new Matrix(4, 4, 1);
     expect(matrix.matrix[0][1].isFlagged).toEqual(false);
     matrix.changeFlagStateOnCell(1, 0);
@@ -303,4 +315,26 @@ describe('Matrix tests', () => {
     matrix.changeFlagStateOnCell(1, 0);
     expect(matrix.getFlaggedCellsCount()).toEqual(1);
   })
+
+  it('timeCount test', (done) => {
+    const matrix = new Matrix(4, 4, 0);
+    matrix.matrix[0][0].insertBomb();
+    matrix.matrix[0][2].insertBomb();
+    matrix.fillAdjacentMines();
+    matrix.bombCount = 2;
+    matrix.revealCell(2, 2);
+    setTimeout(() => {
+      console.log(matrix.timeCount)
+      setTimeout(() => {
+        expect(matrix.timeCount).toEqual(1);
+      }, 1100)
+      setTimeout(() => {
+        expect(matrix.timeCount).toEqual(2);
+      }, 2000)
+      setTimeout(() => {
+        expect(matrix.timeCount).toEqual(3);
+        done();
+      }, 3000)
+    })
+  }) 
 });

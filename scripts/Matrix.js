@@ -101,12 +101,9 @@ export class Matrix {
         return this.revealCell(x, y);
       }
       this.firstClick = false;
-
-      //starting a timer
       this.intervalId = setInterval(() => {
         this.timeCount++;
-        document.querySelector('.js-timer').innerHTML = `⏲️${this.timeCount}`;
-      }, 1000);      
+      }, 1000);   
     }
 
     if (this.doesCellExist(x, y) && !this.matrix[y][x].isRevealed) {
@@ -128,6 +125,7 @@ export class Matrix {
 
   stopTimer() {
     clearInterval(this.intervalId);
+    this.intervalId = null;
   }
 
   returnAdjacentCells(x, y) {

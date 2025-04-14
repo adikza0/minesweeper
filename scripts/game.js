@@ -1,5 +1,7 @@
 import { Matrix } from './Matrix.js';
 
+let timerInterval;
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
@@ -19,8 +21,6 @@ if (mines === null) {
 }
 
 const matrix = new Matrix(10, 10, 10);
-
-
 handleGameStatus(matrix)
 
 
@@ -65,6 +65,8 @@ export function generateHTML(matrix) {
 };
 
 export function handleGameStatus(matrix) {
+  clearInterval(timerInterval);
+  timerInterval = null;
   if (matrix.gameOver) {
     matrix.revealMines();
     generateHTML(matrix);
@@ -76,6 +78,13 @@ export function handleGameStatus(matrix) {
     generateHTML(matrix);
     addEventListeners(matrix);
   }
+
+  timerInterval = setInterval(() => {
+    if (!matrix.gameOver && !matrix.gameWon) {
+      document.querySelector('.js-timer').innerHTML = `⏱️${matrix.timeCount}`;
+    }
+  }, 100)
+
 }
 
 function showAlert(message) {
@@ -88,6 +97,9 @@ function showAlert(message) {
 
 
 function addEventListeners(matrix) {
+  document.querySelector('.js-reset').addEventListener('click', () => {
+    location.reload();
+  })
   document.addEventListener('contextmenu', event => {
     event.preventDefault();
   })
@@ -120,4 +132,4 @@ function addEventListeners(matrix) {
 }
 
 
-//TODO: countdown, reset, launcher, maybe hover highlight?,  better win and lose screen
+//TODO: launcher, maybe hover highlight?,  better win and lose screen

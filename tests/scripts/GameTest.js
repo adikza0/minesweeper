@@ -5,12 +5,15 @@ describe('game test suite', () => {
   afterAll(() => {
     document.querySelector('.js-game-container').innerHTML = '';
     document.querySelector('.js-score').innerHTML = '';
+    document.querySelector('.js-timer').innerHTML = '';
   })
+  
 
   it('10x5 unrevealed matrix HTML check', () => {
     const matrix = new Matrix(5, 10, 5);
     handleGameStatus(matrix)
     expect(document.querySelector('.js-game-container').innerHTML).toEqual(`<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell" data-x="2" data-y="0"></div><div class="cell" data-x="3" data-y="0"></div><div class="cell" data-x="4" data-y="0"></div><div class="cell" data-x="5" data-y="0"></div><div class="cell" data-x="6" data-y="0"></div><div class="cell" data-x="7" data-y="0"></div><div class="cell" data-x="8" data-y="0"></div><div class="cell" data-x="9" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell" data-x="2" data-y="1"></div><div class="cell" data-x="3" data-y="1"></div><div class="cell" data-x="4" data-y="1"></div><div class="cell" data-x="5" data-y="1"></div><div class="cell" data-x="6" data-y="1"></div><div class="cell" data-x="7" data-y="1"></div><div class="cell" data-x="8" data-y="1"></div><div class="cell" data-x="9" data-y="1"></div></div><div class="row"><div class="cell" data-x="0" data-y="2"></div><div class="cell" data-x="1" data-y="2"></div><div class="cell" data-x="2" data-y="2"></div><div class="cell" data-x="3" data-y="2"></div><div class="cell" data-x="4" data-y="2"></div><div class="cell" data-x="5" data-y="2"></div><div class="cell" data-x="6" data-y="2"></div><div class="cell" data-x="7" data-y="2"></div><div class="cell" data-x="8" data-y="2"></div><div class="cell" data-x="9" data-y="2"></div></div><div class="row"><div class="cell" data-x="0" data-y="3"></div><div class="cell" data-x="1" data-y="3"></div><div class="cell" data-x="2" data-y="3"></div><div class="cell" data-x="3" data-y="3"></div><div class="cell" data-x="4" data-y="3"></div><div class="cell" data-x="5" data-y="3"></div><div class="cell" data-x="6" data-y="3"></div><div class="cell" data-x="7" data-y="3"></div><div class="cell" data-x="8" data-y="3"></div><div class="cell" data-x="9" data-y="3"></div></div><div class="row"><div class="cell" data-x="0" data-y="4"></div><div class="cell" data-x="1" data-y="4"></div><div class="cell" data-x="2" data-y="4"></div><div class="cell" data-x="3" data-y="4"></div><div class="cell" data-x="4" data-y="4"></div><div class="cell" data-x="5" data-y="4"></div><div class="cell" data-x="6" data-y="4"></div><div class="cell" data-x="7" data-y="4"></div><div class="cell" data-x="8" data-y="4"></div><div class="cell" data-x="9" data-y="4"></div></div>`)
+    matrix.gameOver = true;
   })
   it('4x4 partly revealed matrix HTML check', () => {
     const matrix = new Matrix(4, 4, 0);
@@ -20,7 +23,7 @@ describe('game test suite', () => {
     matrix.fillAdjacentMines();
     matrix.revealCell(3, 3);
 
-    handleGameStatus(matrix)
+    handleGameStatus(matrix);
     expect(document.querySelector('.js-game-container').innerHTML).toEqual(`<div class="row"><div class="cell" data-x="0" data-y="0"></div><div class="cell" data-x="1" data-y="0"></div><div class="cell revealed" data-x="2" data-y="0">2</div><div class="cell revealed" data-x="3" data-y="0"></div></div><div class="row"><div class="cell" data-x="0" data-y="1"></div><div class="cell" data-x="1" data-y="1"></div><div class="cell revealed" data-x="2" data-y="1">2</div><div class="cell revealed" data-x="3" data-y="1"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="2">1</div><div class="cell revealed" data-x="1" data-y="2">1</div><div class="cell revealed" data-x="2" data-y="2">1</div><div class="cell revealed" data-x="3" data-y="2"></div></div><div class="row"><div class="cell revealed" data-x="0" data-y="3"></div><div class="cell revealed" data-x="1" data-y="3"></div><div class="cell revealed" data-x="2" data-y="3"></div><div class="cell revealed" data-x="3" data-y="3"></div></div>`);
   })
 
@@ -129,5 +132,6 @@ describe('game test suite', () => {
     handleGameStatus(matrix)
     expect(document.querySelector('.js-score').innerHTML).toEqual('🚩-1');
   })
+  
 }
 )
