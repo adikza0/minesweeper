@@ -20,7 +20,7 @@ if (mines === null) {
   mines = 8;
 }
 
-const matrix = new Matrix(10, 10, 10);
+const matrix = new Matrix(columns, rows, mines);
 handleGameStatus(matrix)
 
 
