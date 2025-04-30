@@ -112,7 +112,7 @@ export class Matrix {
         this.gameOver = true;
         this.failedCell = this.matrix[y][x];
         this.stopTimer();
-      } else if (this.returnUnrevealedCellCount() === this.bombCount) {
+      } else if (this.returnUnrevealedCellCount() == this.bombCount) {
         this.gameWon = true;
         this.stopTimer();
       } else {
