@@ -5,8 +5,8 @@ let timerInterval;
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-let columns = urlParams.get('columns');
-let rows = urlParams.get('rows');
+let rows = urlParams.get('columns');
+let columns = urlParams.get('rows');
 let mines = urlParams.get('mines');
 
 
@@ -131,5 +131,23 @@ function addEventListeners(matrix) {
   })
 }
 
+const themeToggle = document.getElementById('theme-toggle');
 
+// on load, apply saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+}
+
+// when user toggles:
+themeToggle.addEventListener('change', () => {
+  if (themeToggle.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  }
+});
 //TODO: launcher, maybe hover highlight?,  better win and lose screen
